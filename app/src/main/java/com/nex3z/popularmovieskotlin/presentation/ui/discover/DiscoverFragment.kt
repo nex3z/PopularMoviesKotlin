@@ -8,19 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import com.nex3z.popularmovieskotlin.R
 import com.nex3z.popularmovieskotlin.app.App
-import com.nex3z.popularmovieskotlin.data.repository.MovieRepository
-import com.nex3z.popularmovieskotlin.data.repository.MovieRepositoryImpl
+import com.nex3z.popularmovieskotlin.data.repository.movie.MovieRepository
+import com.nex3z.popularmovieskotlin.data.repository.movie.MovieRepositoryImpl
 import com.nex3z.popularmovieskotlin.domain.executor.JobExecutor
-import com.nex3z.popularmovieskotlin.domain.interactor.movie.DiscoverMovieUseCase
+import com.nex3z.popularmovieskotlin.domain.interactor.movie.DiscoverMoviesUseCase
 import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmovieskotlin.presentation.ui.UiThread
 import com.nex3z.popularmovieskotlin.presentation.ui.base.BaseFragment
+import com.nex3z.popularmovieskotlin.presentation.ui.base.HasPresenter
 import com.nex3z.popularmovieskotlin.presentation.ui.misc.SpacesItemDecoration
 import com.nex3z.popularmovieskotlin.presentation.ui.misc.ViewUtil
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import kotlinx.android.synthetic.main.fragment_discover.*
 
-class DiscoverFragment : BaseFragment(), DiscoverView {
+class DiscoverFragment : BaseFragment(), DiscoverView, HasPresenter<DiscoverPresenter> {
 
     private lateinit var presenter: DiscoverPresenter
     private var type: String = TYPE_DISCOVERY
@@ -56,6 +57,10 @@ class DiscoverFragment : BaseFragment(), DiscoverView {
         listener = null
     }
 
+    override fun getPresenter(): DiscoverPresenter {
+        return presenter
+    }
+
     override fun showLoading() {
         pb_loading.visibility = View.VISIBLE
     }
@@ -88,6 +93,12 @@ class DiscoverFragment : BaseFragment(), DiscoverView {
     }
 
     private fun initView() {
+        adapter.onItemClickListener = object: MovieAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                presenter.onMovieClick(position)
+            }
+        }
+
         rv_movie_list.adapter = adapter
         rv_movie_list.layoutManager = GridLayoutManager(context, 2)
         val spacing = ViewUtil.dpToPx(context, 4.0f).toInt()
@@ -105,9 +116,9 @@ class DiscoverFragment : BaseFragment(), DiscoverView {
         })
     }
 
-    fun initPresenter() {
+    private fun initPresenter() {
         val movieRepo : MovieRepository = MovieRepositoryImpl(App.restClient)
-        val useCase = DiscoverMovieUseCase(movieRepo, JobExecutor(), UiThread)
+        val useCase = DiscoverMoviesUseCase(movieRepo, JobExecutor(), UiThread)
         presenter = DiscoverPresenter(useCase)
         presenter.view = this
     }
@@ -118,7 +129,7 @@ class DiscoverFragment : BaseFragment(), DiscoverView {
 
     companion object {
         private val LOG_TAG = "DiscoverFragment"
-        private val ARG_TYPE = "type"
+        private val ARG_TYPE = "arg_type"
         private val TYPE_DISCOVERY = "discovery"
 
         fun newDiscoverInstance(): DiscoverFragment {

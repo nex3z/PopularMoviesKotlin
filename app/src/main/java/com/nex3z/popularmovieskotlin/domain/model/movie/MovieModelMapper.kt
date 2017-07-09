@@ -5,16 +5,12 @@ import com.nex3z.popularmovieskotlin.data.entity.movie.MovieEntity
 
 object MovieModelMapper {
 
-    fun transform(entity: DiscoverMovieResponse): List<MovieModel> {
-        if (entity.results != null) {
-            return entity.results.map(this::transform)
-        } else {
-            return emptyList();
-        }
+    fun transform(resp: DiscoverMovieResponse): List<MovieModel> {
+        return resp.results.map(MovieModelMapper::transform)
     }
 
     fun transform(entity: MovieEntity): MovieModel {
-        val movieModel: MovieModel = MovieModel(
+        return MovieModel(
                 posterPath = entity.poster_path,
                 adult = entity.adult,
                 overview = entity.overview,
@@ -30,8 +26,6 @@ object MovieModelMapper {
                 video = entity.video,
                 voteAverage = entity.vote_average
         )
-
-        return movieModel
     }
 
 }

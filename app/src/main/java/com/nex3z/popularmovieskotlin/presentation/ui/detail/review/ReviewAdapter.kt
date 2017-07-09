@@ -1,19 +1,18 @@
-package com.nex3z.popularmovieskotlin.presentation.ui.discover
+package com.nex3z.popularmovieskotlin.presentation.ui.detail.review
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.nex3z.popularmovieskotlin.R
-import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_movie.view.*
+import com.nex3z.popularmovieskotlin.domain.model.review.ReviewModel
+import kotlinx.android.synthetic.main.item_review.view.*
 
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
 
     var onItemClickListener: OnItemClickListener? = null
 
-    var movies: List<MovieModel> = listOf()
+    var reviews: List<ReviewModel> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -21,20 +20,18 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent?.context)
-        val itemView = inflater.inflate(R.layout.item_movie, parent, false)
+        val itemView = inflater.inflate(R.layout.item_review, parent, false)
         return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val movie = movies[position]
-
-        holder.itemView.tv_title.text = movie.title
-        val url = movie.getPosterImageUrl()
-        Picasso.with(holder.itemView.context).load(url).into(holder.itemView.iv_poster)
+        val review = reviews[position]
+        holder.itemView.tv_review_author.text = review.author
+        holder.itemView.tv_review_content.text = review.content
     }
 
     override fun getItemCount(): Int {
-        return movies.count()
+        return reviews.size
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

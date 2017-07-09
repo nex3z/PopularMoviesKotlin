@@ -2,7 +2,11 @@ package com.nex3z.popularmovieskotlin.data.net
 
 import com.nex3z.popularmovieskotlin.BuildConfig
 import com.nex3z.popularmovieskotlin.data.net.service.MovieService
-import okhttp3.*
+import com.nex3z.popularmovieskotlin.data.net.service.ReviewService
+import com.nex3z.popularmovieskotlin.data.net.service.VideoService
+import okhttp3.HttpUrl
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -10,7 +14,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class RestClient {
     private val BASE_URL = "http://api.themoviedb.org"
-    private val movieService: MovieService
+    val movieService: MovieService
+    val videoService: VideoService
+    val reviewService: ReviewService
 
     init {
         val httpClient: OkHttpClient = OkHttpClient.Builder()
@@ -37,10 +43,8 @@ class RestClient {
                 .build()
 
         movieService = retrofit.create(MovieService::class.java)
-    }
-
-    fun getMovieService(): MovieService {
-        return movieService
+        videoService = retrofit.create(VideoService::class.java)
+        reviewService = retrofit.create(ReviewService::class.java)
     }
 
 }

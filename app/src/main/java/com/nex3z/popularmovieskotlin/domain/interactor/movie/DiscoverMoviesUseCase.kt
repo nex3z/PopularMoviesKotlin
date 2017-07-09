@@ -1,6 +1,6 @@
 package com.nex3z.popularmovieskotlin.domain.interactor.movie
 
-import com.nex3z.popularmovieskotlin.data.repository.MovieRepository
+import com.nex3z.popularmovieskotlin.data.repository.movie.MovieRepository
 import com.nex3z.popularmovieskotlin.domain.executor.PostExecutionThread
 import com.nex3z.popularmovieskotlin.domain.executor.ThreadExecutor
 import com.nex3z.popularmovieskotlin.domain.interactor.UseCase
@@ -8,11 +8,11 @@ import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModelMapper
 import io.reactivex.Observable
 
-class DiscoverMovieUseCase(
+class DiscoverMoviesUseCase(
         private val movieRepository: MovieRepository,
         threadExecutor: ThreadExecutor,
         postExecutionThread: PostExecutionThread
-) : UseCase<List<MovieModel>, DiscoverMovieUseCase.Params>(threadExecutor, postExecutionThread) {
+) : UseCase<List<MovieModel>, DiscoverMoviesUseCase.Params>(threadExecutor, postExecutionThread) {
 
     private val mMovieModels: List<MovieModel>? = null
 
@@ -20,6 +20,7 @@ class DiscoverMovieUseCase(
         return movieRepository
                 .discoverMovies(params.page, params.sortBy)
                 .map(MovieModelMapper::transform)
+                .toObservable()
     }
 
     class Params private constructor(val page: Int, val sortBy: String) {

@@ -2,12 +2,12 @@ package com.nex3z.popularmovieskotlin.presentation.ui.discover
 
 import android.util.Log
 import com.nex3z.popularmovieskotlin.domain.interactor.DefaultObserver
-import com.nex3z.popularmovieskotlin.domain.interactor.movie.DiscoverMovieUseCase
+import com.nex3z.popularmovieskotlin.domain.interactor.movie.DiscoverMoviesUseCase
 import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmovieskotlin.presentation.ui.base.BasePresenter
 
 class DiscoverPresenter(
-        private val discoverMovieUseCase: DiscoverMovieUseCase
+        private val discoverMoviesUseCase: DiscoverMoviesUseCase
 ) : BasePresenter<DiscoverView>() {
 
     private var page = 1
@@ -15,7 +15,7 @@ class DiscoverPresenter(
 
     override fun destroy() {
         super.destroy()
-        discoverMovieUseCase.dispose()
+        discoverMoviesUseCase.dispose()
     }
 
     fun init() {
@@ -35,10 +35,14 @@ class DiscoverPresenter(
         fetchMovies()
     }
 
+    fun onMovieClick(position: Int) {
+        view?.showDetail(movies[position])
+    }
+
     private fun fetchMovies() {
         Log.v(LOG_TAG, "fetchMovies(): page = " + page)
-        discoverMovieUseCase.execute(DiscoverMovieObserver(),
-                DiscoverMovieUseCase.Params.forPage(page));
+        discoverMoviesUseCase.execute(DiscoverMovieObserver(),
+                DiscoverMoviesUseCase.Params.forPage(page));
     }
 
     private fun renderMovies(newMovies: List<MovieModel>) {
