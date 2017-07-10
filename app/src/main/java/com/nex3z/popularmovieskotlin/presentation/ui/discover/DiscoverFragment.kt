@@ -82,8 +82,8 @@ class DiscoverFragment : BaseFragment(), DiscoverView, HasPresenter<DiscoverPres
         adapter.notifyItemChanged(position)
     }
 
-    override fun showDetail(movie: MovieModel) {
-        listener?.onMovieSelect(movie)
+    override fun showDetail(movie: MovieModel, poster: View) {
+        listener?.onMovieSelect(movie, poster)
     }
 
     private fun init() {
@@ -94,8 +94,8 @@ class DiscoverFragment : BaseFragment(), DiscoverView, HasPresenter<DiscoverPres
 
     private fun initView() {
         adapter.onItemClickListener = object: MovieAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                presenter.onMovieClick(position)
+            override fun onItemClick(position: Int, poster: View) {
+                presenter.onMovieClick(position, poster)
             }
         }
 
@@ -124,7 +124,7 @@ class DiscoverFragment : BaseFragment(), DiscoverView, HasPresenter<DiscoverPres
     }
 
     interface OnMovieSelectListener {
-        fun onMovieSelect(movie: MovieModel)
+        fun onMovieSelect(movie: MovieModel, poster: View)
     }
 
     companion object {

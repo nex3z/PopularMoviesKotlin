@@ -43,6 +43,7 @@
             android:layout_height="match_parent"
             android:layout_above="@id/tv_title"
             android:scaleType="centerCrop"
+            android:transitionName="@string/detail_poster_transition_name"
             tools:src="@drawable/placeholder_poster"/>
 
     </RelativeLayout>

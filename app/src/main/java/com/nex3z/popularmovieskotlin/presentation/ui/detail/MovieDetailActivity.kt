@@ -26,6 +26,8 @@ class MovieDetailActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         movie = intent.getParcelableExtra(MOVIE_INFO);
+
+        supportPostponeEnterTransition();
         init()
     }
 

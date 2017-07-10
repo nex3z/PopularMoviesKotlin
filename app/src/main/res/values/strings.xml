@@ -4,12 +4,12 @@
     <string name="tab_movie_detail">Detail</string>
     <string name="tab_movie_video">Video</string>
     <string name="tab_movie_review">Review</string>
-
     <string name="share">Share</string>
     <string name="share_hash_tag">\u0020#PopularMovie</string>
+
     <string name="no_video_available">No video available for this movie.</string>
     <string name="no_review_available">No review on this movie yet.</string>
-
+    <string name="detail_poster_transition_name" translatable="false">detail_poster_transition</string>
     <string name="vote_average">%1$.1f/10</string>
 
     <string name="genre_action">Action</string>

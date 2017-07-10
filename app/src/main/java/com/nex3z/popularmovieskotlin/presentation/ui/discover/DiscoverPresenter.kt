@@ -1,6 +1,7 @@
 package com.nex3z.popularmovieskotlin.presentation.ui.discover
 
 import android.util.Log
+import android.view.View
 import com.nex3z.popularmovieskotlin.domain.interactor.DefaultObserver
 import com.nex3z.popularmovieskotlin.domain.interactor.movie.DiscoverMoviesUseCase
 import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
@@ -35,8 +36,8 @@ class DiscoverPresenter(
         fetchMovies()
     }
 
-    fun onMovieClick(position: Int) {
-        view?.showDetail(movies[position])
+    fun onMovieClick(position: Int, poster: View) {
+        view?.showDetail(movies[position], poster)
     }
 
     private fun fetchMovies() {

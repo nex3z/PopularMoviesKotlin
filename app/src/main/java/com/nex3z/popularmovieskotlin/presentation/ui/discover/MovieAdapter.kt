@@ -39,12 +39,14 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
-            itemView.setOnClickListener { onItemClickListener?.onItemClick(adapterPosition) }
+            itemView.setOnClickListener {
+                onItemClickListener?.onItemClick(adapterPosition, itemView.iv_poster)
+            }
         }
     }
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
+        fun onItemClick(position: Int, poster: View)
     }
 
 }
