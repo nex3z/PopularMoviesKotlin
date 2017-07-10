@@ -50,6 +50,7 @@ class MovieDetailActivity : BaseActivity() {
     }
 
     private fun renderMovie() {
+        ctl_toolbar_container.setExpandedTitleTextAppearance(R.style.MovieDetailTitleExpanded)
         ctl_toolbar_container.title = movie.title
         Picasso.with(this)
                 .load(movie.getBackdropImageUrl())

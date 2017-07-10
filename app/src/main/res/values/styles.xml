@@ -21,4 +21,11 @@
 
     <style name="AppTheme.Detail" parent="@style/AppTheme.NoActionBar"/>
 
+    <style name="MovieDetailTitleExpanded" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/colorTransparent80</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:maxLines">2</item>
+    </style>
+
 </resources>

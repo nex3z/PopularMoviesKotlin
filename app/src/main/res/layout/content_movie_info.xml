@@ -32,15 +32,15 @@
 
             <TextView
                 android:id="@+id/tv_movie_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:textSize="24sp"
+                android:maxLines="3"
+                android:textSize="20sp"
                 android:textColor="@android:color/black"
                 tools:text="Zootopia" />
 
             <TableLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TableRow android:layout_marginTop="4dp">
@@ -53,8 +53,9 @@
 
                     <TextView
                         android:id="@+id/tv_release_date"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_gravity="center_vertical"
                         android:textSize="16sp"
                         android:gravity="center_vertical"
@@ -72,8 +73,9 @@
 
                     <TextView
                         android:id="@+id/tv_vote"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_gravity="center_vertical"
                         android:textSize="16sp"
                         tools:text="9.0/10" />
@@ -90,8 +92,9 @@
 
                     <TextView
                         android:id="@+id/tv_genre"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:textSize="16sp"
                         android:maxLines="2"
                         android:ellipsize="end"
