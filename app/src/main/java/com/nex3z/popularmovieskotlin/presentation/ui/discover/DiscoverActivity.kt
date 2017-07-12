@@ -2,23 +2,29 @@ package com.nex3z.popularmovieskotlin.presentation.ui.discover
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import com.nex3z.popularmovieskotlin.R
 import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmovieskotlin.presentation.ui.detail.MovieDetailActivity
 import kotlinx.android.synthetic.main.activity_discover.*
+import android.support.v4.view.GravityCompat
 
-class DiscoverActivity : AppCompatActivity(), DiscoverFragment.OnMovieSelectListener {
+class DiscoverActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+        DiscoverFragment.OnMovieSelectListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discover)
         setSupportActionBar(toolbar)
 
+        setupDrawer()
         navigateToDiscoveryList()
     }
 
@@ -26,6 +32,22 @@ class DiscoverActivity : AppCompatActivity(), DiscoverFragment.OnMovieSelectList
         supportFragmentManager.beginTransaction()
                 .replace(R.id.movie_list_container, DiscoverFragment.newDiscoverInstance())
                 .commit()
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        Log.v(LOG_TAG, "onNavigationItemSelected(): id = " + id)
+
+        if (id == R.id.nav_discover) {
+            navigateToDiscoveryList()
+        } else if (id == R.id.nav_favourite) {
+
+        } else if (id == R.id.nav_settings) {
+
+        }
+
+        drawer.closeDrawer(GravityCompat.START)
+        return true
     }
 
     override fun onMovieSelect(movie: MovieModel, poster: View) {
@@ -37,6 +59,16 @@ class DiscoverActivity : AppCompatActivity(), DiscoverFragment.OnMovieSelectList
                         poster, getString(R.string.detail_poster_transition_name)))
 
         ActivityCompat.startActivity(this, intent, activityOptions.toBundle())
+    }
+
+    private fun setupDrawer() {
+        val toggle = ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawer.addDrawerListener(toggle)
+        toggle.syncState()
+
+        nav.setNavigationItemSelectedListener(this)
+        nav.menu.getItem(0).isChecked = true
     }
 
     companion object {
