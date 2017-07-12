@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -13,8 +14,10 @@ import android.view.View
 import com.nex3z.popularmovieskotlin.R
 import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmovieskotlin.presentation.ui.detail.MovieDetailActivity
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_discover.*
-import android.support.v4.view.GravityCompat
+import kotlinx.android.synthetic.main.app_bar_discover.*
+import kotlinx.android.synthetic.main.nav_header_discover.*
 
 class DiscoverActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
         DiscoverFragment.OnMovieSelectListener {
@@ -52,6 +55,14 @@ class DiscoverActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     override fun onMovieSelect(movie: MovieModel, poster: View) {
         Log.v(LOG_TAG, "onMovieSelect(): movie = " + movie.title)
+
+        Picasso.with(this)
+                .load(movie.getBackdropImageUrl())
+                .error(R.drawable.side_nav_bar)
+                .placeholder(R.drawable.side_nav_bar)
+                .into(iv_drawer_header)
+        tv_drawer_title.text = movie.title
+
         val intent = Intent(this, MovieDetailActivity::class.java)
                 .putExtra(MovieDetailActivity.MOVIE_INFO, movie)
         val activityOptions = ActivityOptionsCompat
