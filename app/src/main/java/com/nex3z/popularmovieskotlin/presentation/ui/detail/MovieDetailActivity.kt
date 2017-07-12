@@ -1,10 +1,15 @@
 package com.nex3z.popularmovieskotlin.presentation.ui.detail
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.MenuItemCompat
+import android.support.v7.widget.ShareActionProvider
 import android.util.Log
+import android.view.Menu
 import android.view.View
 import com.nex3z.popularmovieskotlin.R
 import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
@@ -25,10 +30,21 @@ class MovieDetailActivity : BaseActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        movie = intent.getParcelableExtra(MOVIE_INFO);
+        movie = intent.getParcelableExtra(MOVIE_INFO)
 
-        supportPostponeEnterTransition();
+        supportPostponeEnterTransition()
         init()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_movie_detail, menu)
+
+        val item = menu?.findItem(R.id.action_share)
+
+        val shareActionProvider = MenuItemCompat.getActionProvider(item) as ShareActionProvider
+        shareActionProvider.setShareIntent(createShareMovieIntent())
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun init() {
@@ -40,7 +56,7 @@ class MovieDetailActivity : BaseActivity() {
         pager_detail.adapter = SectionPagerAdapter(supportFragmentManager)
         tab_detail.setupWithViewPager(pager_detail)
 
-        app_bar.addOnOffsetChangedListener({ appBarLayout, verticalOffset ->
+        app_bar.addOnOffsetChangedListener({ _, verticalOffset ->
             if (ctl_toolbar_container.height + verticalOffset < ctl_toolbar_container.height / 2) {
                 tab_detail.visibility = View.GONE
             } else {
@@ -56,7 +72,21 @@ class MovieDetailActivity : BaseActivity() {
                 .load(movie.getBackdropImageUrl())
                 .error(R.drawable.placeholder_poster_white)
                 .placeholder(R.drawable.placeholder_poster_white)
-                .into(iv_detail_backdrop);
+                .into(iv_detail_backdrop)
+    }
+
+    private fun createShareMovieIntent(): Intent {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.addFlags(
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP)
+                    Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET
+                else
+                    Intent.FLAG_ACTIVITY_NEW_DOCUMENT
+        )
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, movie.title + ": " + movie.overview
+                + getString(R.string.share_hash_tag))
+        return shareIntent
     }
 
     private inner class SectionPagerAdapter constructor(
