@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".presentation.ui.discover.DiscoverActivity"
+            android:name=".presentation.ui.movielist.MovieListActivity"
             android:theme="@style/AppTheme.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,11 +23,11 @@
         </activity>
         <activity
             android:name=".presentation.ui.detail.MovieDetailActivity"
-            android:parentActivityName=".presentation.ui.discover.DiscoverActivity"
+            android:parentActivityName=".presentation.ui.movielist.MovieListActivity"
             android:theme="@style/AppTheme.Detail">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nex3z.popularmovieskotlin.presentation.ui.discover.DiscoverActivity" />
+                android:value="com.nex3z.popularmovieskotlin.presentation.ui.movielist.MovieListActivity" />
         </activity>
     </application>
 

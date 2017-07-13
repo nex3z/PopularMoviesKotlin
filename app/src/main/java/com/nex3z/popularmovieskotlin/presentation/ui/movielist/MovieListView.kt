@@ -1,11 +1,11 @@
-package com.nex3z.popularmovieskotlin.presentation.ui.discover
+package com.nex3z.popularmovieskotlin.presentation.ui.movielist
 
 import android.view.View
 import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmovieskotlin.presentation.ui.base.BaseView
 import com.nex3z.popularmovieskotlin.presentation.ui.base.LoadDataView
 
-interface DiscoverView : BaseView, LoadDataView {
+interface MovieListView : BaseView, LoadDataView {
 
     fun renderMovies(movies: List<MovieModel>)
 

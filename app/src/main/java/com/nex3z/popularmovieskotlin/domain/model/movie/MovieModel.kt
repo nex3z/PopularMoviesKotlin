@@ -2,8 +2,6 @@ package com.nex3z.popularmovieskotlin.domain.model.movie
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.support.v7.widget.RecyclerView
-import android.view.View
 
 data class MovieModel (
         val posterPath: String = "",
@@ -19,7 +17,8 @@ data class MovieModel (
         val popularity: Double = 0.0,
         val voteCount: Int = 0,
         val video: Boolean = false,
-        val voteAverage: Double = 0.0
+        val voteAverage: Double = 0.0,
+        var favourite: Boolean = false
 ) : Parcelable {
 
     constructor(source: Parcel) : this(
@@ -36,7 +35,8 @@ data class MovieModel (
             source.readDouble(),
             source.readInt(),
             1 == source.readInt(),
-            source.readDouble()
+            source.readDouble(),
+            1 == source.readInt()
     )
 
     override fun describeContents() = 0
@@ -56,6 +56,7 @@ data class MovieModel (
         dest.writeInt(voteCount)
         dest.writeInt((if (video) 1 else 0))
         dest.writeDouble(voteAverage)
+        dest.writeInt((if (favourite) 1 else 0))
     }
 
     fun getPosterImageUrl(size: String = "w185"): String {
@@ -65,8 +66,6 @@ data class MovieModel (
     fun getBackdropImageUrl(size: String = "w780"): String {
         return BASE_IMAGE_URL + size + "/" + backdropPath
     }
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     companion object {
         val BASE_IMAGE_URL = "http://image.tmdb.org/t/p/"

@@ -1,4 +1,4 @@
-package com.nex3z.popularmovieskotlin.presentation.ui.discover
+package com.nex3z.popularmovieskotlin.presentation.ui.movielist
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -29,6 +29,10 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
         val movie = movies[position]
 
         holder.itemView.tv_title.text = movie.title
+        holder.itemView.btn_favourite.setImageResource(
+                if (movie.favourite) R.drawable.ic_favorite_24dp
+                else R.drawable.ic_favorite_border_24dp)
+
         val url = movie.getPosterImageUrl()
         Picasso.with(holder.itemView.context).load(url).into(holder.itemView.iv_poster)
     }
@@ -42,11 +46,15 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
             itemView.setOnClickListener {
                 onItemClickListener?.onItemClick(adapterPosition, itemView.iv_poster)
             }
+            itemView.btn_favourite.setOnClickListener {
+                onItemClickListener?.onFavouriteClick(adapterPosition)
+            }
         }
     }
 
     interface OnItemClickListener {
         fun onItemClick(position: Int, poster: View)
+        fun onFavouriteClick(position: Int)
     }
 
 }

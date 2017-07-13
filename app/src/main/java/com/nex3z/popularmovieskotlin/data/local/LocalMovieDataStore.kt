@@ -1,12 +1,9 @@
-package com.nex3z.popularmovieskotlin.data.repository.movie
+package com.nex3z.popularmovieskotlin.data.local
 
-import com.nex3z.popularmovieskotlin.data.entity.movie.DiscoverMovieResponse
 import com.nex3z.popularmovieskotlin.data.entity.movie.MovieEntity
 import io.reactivex.Single
 
-interface MovieRepository {
-
-    fun discoverMovies(page: Int, sortBy: String): Single<DiscoverMovieResponse>
+interface LocalMovieDataStore {
 
     fun getFavourites(): Single<List<MovieEntity>>
 

@@ -1,4 +1,4 @@
-package com.nex3z.popularmovieskotlin.presentation.ui.discover
+package com.nex3z.popularmovieskotlin.presentation.ui.movielist
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,17 +14,19 @@ import android.view.View
 import com.nex3z.popularmovieskotlin.R
 import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmovieskotlin.presentation.ui.detail.MovieDetailActivity
+import com.nex3z.popularmovieskotlin.presentation.ui.movielist.discover.DiscoverFragment
+import com.nex3z.popularmovieskotlin.presentation.ui.movielist.favourite.FavouriteFragment
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_discover.*
-import kotlinx.android.synthetic.main.app_bar_discover.*
+import kotlinx.android.synthetic.main.activity_movie_list.*
+import kotlinx.android.synthetic.main.app_bar_movie_list.*
 import kotlinx.android.synthetic.main.nav_header_discover.*
 
-class DiscoverActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-        DiscoverFragment.OnMovieSelectListener {
+class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+        OnMovieSelectListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_discover)
+        setContentView(R.layout.activity_movie_list)
         setSupportActionBar(toolbar)
 
         setupDrawer()
@@ -33,7 +35,13 @@ class DiscoverActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     private fun navigateToDiscoveryList() {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.movie_list_container, DiscoverFragment.newDiscoverInstance())
+                .replace(R.id.movie_list_container, DiscoverFragment.newInstance())
+                .commit()
+    }
+
+    private fun navigateToFavouriteList() {
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.movie_list_container, FavouriteFragment.newInstance())
                 .commit()
     }
 
@@ -44,7 +52,7 @@ class DiscoverActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         if (id == R.id.nav_discover) {
             navigateToDiscoveryList()
         } else if (id == R.id.nav_favourite) {
-
+            navigateToFavouriteList()
         } else if (id == R.id.nav_settings) {
 
         }
@@ -83,6 +91,6 @@ class DiscoverActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     }
 
     companion object {
-        private val LOG_TAG = "DiscoverActivity"
+        private val LOG_TAG = "MovieListActivity"
     }
 }

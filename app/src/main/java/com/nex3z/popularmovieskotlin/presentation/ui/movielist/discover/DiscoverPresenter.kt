@@ -1,15 +1,18 @@
-package com.nex3z.popularmovieskotlin.presentation.ui.discover
+package com.nex3z.popularmovieskotlin.presentation.ui.movielist.discover
 
 import android.util.Log
 import android.view.View
 import com.nex3z.popularmovieskotlin.domain.interactor.DefaultObserver
 import com.nex3z.popularmovieskotlin.domain.interactor.movie.DiscoverMoviesUseCase
+import com.nex3z.popularmovieskotlin.domain.interactor.movie.SetFavouriteUseCase
 import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmovieskotlin.presentation.ui.base.BasePresenter
+import com.nex3z.popularmovieskotlin.presentation.ui.movielist.MovieListView
 
 class DiscoverPresenter(
-        private val discoverMoviesUseCase: DiscoverMoviesUseCase
-) : BasePresenter<DiscoverView>() {
+        private val discoverMoviesUseCase: DiscoverMoviesUseCase,
+        private val setFavouriteUseCase: SetFavouriteUseCase
+) : BasePresenter<MovieListView>() {
 
     private var page = 1
     private val movies: MutableList<MovieModel> = mutableListOf()
@@ -38,6 +41,13 @@ class DiscoverPresenter(
 
     fun onMovieClick(position: Int, poster: View) {
         view?.showDetail(movies[position], poster)
+    }
+
+    fun onFavouriteClick(position: Int) {
+        val movie = movies[position]
+        val params = if (movie.favourite) SetFavouriteUseCase.Params.removeFromFavourite(movie)
+                     else SetFavouriteUseCase.Params.addToFavourite(movie)
+        setFavouriteUseCase.execute(SetFavouriteMovieObserver(position), params)
     }
 
     private fun fetchMovies() {
@@ -75,6 +85,22 @@ class DiscoverPresenter(
             throwable.printStackTrace()
         }
     }
+
+    private inner class SetFavouriteMovieObserver(
+            private val position: Int
+    ) : DefaultObserver<MovieModel>() {
+        override fun onNext(data: MovieModel) {
+            super.onNext(data)
+            movies[position] = data
+            view?.notifyUpdate(position)
+        }
+
+        override fun onError(throwable: Throwable) {
+            view?.showError(throwable.message ?: "")
+            throwable.printStackTrace()
+        }
+    }
+
 
     companion object {
         private val LOG_TAG = "DiscoverPresenter"

@@ -1,4 +1,4 @@
-package com.nex3z.popularmovieskotlin.presentation.ui.discover
+package com.nex3z.popularmovieskotlin.presentation.ui.movielist.favourite
 
 import android.content.Context
 import android.os.Bundle
@@ -11,20 +11,23 @@ import com.nex3z.popularmovieskotlin.app.App
 import com.nex3z.popularmovieskotlin.data.repository.movie.MovieRepository
 import com.nex3z.popularmovieskotlin.data.repository.movie.MovieRepositoryImpl
 import com.nex3z.popularmovieskotlin.domain.executor.JobExecutor
-import com.nex3z.popularmovieskotlin.domain.interactor.movie.DiscoverMoviesUseCase
+import com.nex3z.popularmovieskotlin.domain.interactor.movie.GetFavouriteUseCase
+import com.nex3z.popularmovieskotlin.domain.interactor.movie.SetFavouriteUseCase
 import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmovieskotlin.presentation.ui.UiThread
 import com.nex3z.popularmovieskotlin.presentation.ui.base.BaseFragment
 import com.nex3z.popularmovieskotlin.presentation.ui.base.HasPresenter
 import com.nex3z.popularmovieskotlin.presentation.ui.misc.SpacesItemDecoration
 import com.nex3z.popularmovieskotlin.presentation.ui.misc.ViewUtil
+import com.nex3z.popularmovieskotlin.presentation.ui.movielist.MovieAdapter
+import com.nex3z.popularmovieskotlin.presentation.ui.movielist.MovieListView
+import com.nex3z.popularmovieskotlin.presentation.ui.movielist.OnMovieSelectListener
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import kotlinx.android.synthetic.main.fragment_discover.*
 
-class DiscoverFragment : BaseFragment(), DiscoverView, HasPresenter<DiscoverPresenter> {
+class FavouriteFragment : BaseFragment(), MovieListView, HasPresenter<FavouritePresenter> {
 
-    private lateinit var presenter: DiscoverPresenter
-    private var type: String = TYPE_DISCOVERY
+    private lateinit var presenter: FavouritePresenter
     private var listener: OnMovieSelectListener? = null
     private val adapter: MovieAdapter = MovieAdapter()
 
@@ -32,13 +35,6 @@ class DiscoverFragment : BaseFragment(), DiscoverView, HasPresenter<DiscoverPres
         super.onAttach(context)
         if (context is OnMovieSelectListener) {
             listener = context
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            type = arguments.getString(ARG_TYPE)
         }
     }
 
@@ -57,7 +53,7 @@ class DiscoverFragment : BaseFragment(), DiscoverView, HasPresenter<DiscoverPres
         listener = null
     }
 
-    override fun getPresenter(): DiscoverPresenter {
+    override fun getPresenter(): FavouritePresenter {
         return presenter
     }
 
@@ -97,6 +93,10 @@ class DiscoverFragment : BaseFragment(), DiscoverView, HasPresenter<DiscoverPres
             override fun onItemClick(position: Int, poster: View) {
                 presenter.onMovieClick(position, poster)
             }
+
+            override fun onFavouriteClick(position: Int) {
+                presenter.onFavouriteClick(position)
+            }
         }
 
         rv_movie_list.adapter = adapter
@@ -110,7 +110,6 @@ class DiscoverFragment : BaseFragment(), DiscoverView, HasPresenter<DiscoverPres
         swipe_container.setOnRefreshListener({ direction ->
             when (direction) {
                 SwipyRefreshLayoutDirection.TOP -> presenter.refresh()
-                SwipyRefreshLayoutDirection.BOTTOM -> presenter.loadMore()
                 else -> { }
             }
         })
@@ -118,26 +117,17 @@ class DiscoverFragment : BaseFragment(), DiscoverView, HasPresenter<DiscoverPres
 
     private fun initPresenter() {
         val movieRepo : MovieRepository = MovieRepositoryImpl(App.restClient)
-        val useCase = DiscoverMoviesUseCase(movieRepo, JobExecutor(), UiThread)
-        presenter = DiscoverPresenter(useCase)
+        val getFavouriteUseCase = GetFavouriteUseCase(movieRepo, JobExecutor(), UiThread)
+        val setFavouriteUseCase = SetFavouriteUseCase(movieRepo, JobExecutor(), UiThread)
+        presenter = FavouritePresenter(getFavouriteUseCase, setFavouriteUseCase)
         presenter.view = this
     }
 
-    interface OnMovieSelectListener {
-        fun onMovieSelect(movie: MovieModel, poster: View)
-    }
-
     companion object {
-        private val LOG_TAG = "DiscoverFragment"
-        private val ARG_TYPE = "arg_type"
-        private val TYPE_DISCOVERY = "discovery"
+        private val LOG_TAG = "FavouriteFragment"
 
-        fun newDiscoverInstance(): DiscoverFragment {
-            val fragment = DiscoverFragment()
-            val args = Bundle()
-            args.putString(ARG_TYPE, TYPE_DISCOVERY)
-            fragment.arguments = args
-            return fragment
+        fun newInstance(): FavouriteFragment {
+            return FavouriteFragment()
         }
     }
 }

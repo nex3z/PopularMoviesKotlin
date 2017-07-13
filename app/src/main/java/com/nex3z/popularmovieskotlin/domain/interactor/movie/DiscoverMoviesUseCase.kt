@@ -14,13 +14,24 @@ class DiscoverMoviesUseCase(
         postExecutionThread: PostExecutionThread
 ) : UseCase<List<MovieModel>, DiscoverMoviesUseCase.Params>(threadExecutor, postExecutionThread) {
 
-    private val mMovieModels: List<MovieModel>? = null
-
     override fun buildUseCaseObservable(params: Params): Observable<List<MovieModel>> {
         return movieRepository
                 .discoverMovies(params.page, params.sortBy)
                 .map(MovieModelMapper::transform)
                 .toObservable()
+                .flatMap({Observable.fromIterable(it)})
+                .flatMap(this::isFavourite, this::update)
+                .toList()
+                .toObservable()
+    }
+
+    private fun isFavourite(movieModel: MovieModel): Observable<Boolean> {
+        return movieRepository.isFavourite(movieModel.id).toObservable()
+    }
+
+    private fun update(movieModel: MovieModel, favourite: Boolean): MovieModel {
+        movieModel.favourite = favourite
+        return movieModel
     }
 
     class Params private constructor(val page: Int, val sortBy: String) {
