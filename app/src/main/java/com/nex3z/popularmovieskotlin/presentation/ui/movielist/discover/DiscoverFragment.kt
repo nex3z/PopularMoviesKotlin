@@ -102,9 +102,7 @@ class DiscoverFragment : BaseFragment(), MovieListView, HasPresenter<DiscoverPre
         rv_movie_list.adapter = adapter
         rv_movie_list.layoutManager = GridLayoutManager(context, 2)
         val spacing = ViewUtil.dpToPx(context, 4.0f).toInt()
-        val rightSpacing = ViewUtil.dpToPx(context, 2.0f).toInt()
-        rv_movie_list.addItemDecoration(
-                SpacesItemDecoration(spacing, spacing, rightSpacing, spacing))
+        rv_movie_list.addItemDecoration(SpacesItemDecoration(spacing, spacing, spacing, spacing))
         rv_movie_list.setHasFixedSize(true)
 
         swipe_container.setOnRefreshListener({ direction ->

@@ -11,9 +11,11 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.FrameLayout
 import com.nex3z.popularmovieskotlin.R
 import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmovieskotlin.presentation.ui.detail.MovieDetailActivity
+import com.nex3z.popularmovieskotlin.presentation.ui.detail.MovieDetailFragment
 import com.nex3z.popularmovieskotlin.presentation.ui.movielist.discover.DiscoverFragment
 import com.nex3z.popularmovieskotlin.presentation.ui.movielist.favourite.FavouriteFragment
 import com.squareup.picasso.Picasso
@@ -23,11 +25,14 @@ import kotlinx.android.synthetic.main.nav_header_discover.*
 
 class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
         OnMovieSelectListener {
+    private var twoPane = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
         setSupportActionBar(toolbar)
+
+        twoPane = findViewById<FrameLayout>(R.id.container_movie_detail) != null
 
         setupDrawer()
         navigateToDiscoveryList()
@@ -71,13 +76,18 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 .into(iv_drawer_header)
         tv_drawer_title.text = movie.title
 
-        val intent = Intent(this, MovieDetailActivity::class.java)
-                .putExtra(MovieDetailActivity.MOVIE_INFO, movie)
-        val activityOptions = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(this, android.support.v4.util.Pair<View, String>(
-                        poster, getString(R.string.detail_poster_transition_name)))
-
-        ActivityCompat.startActivity(this, intent, activityOptions.toBundle())
+        if (twoPane) {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container_movie_detail, MovieDetailFragment.newInstance(movie))
+            transaction.commit()
+        } else {
+            val intent = Intent(this, MovieDetailActivity::class.java)
+                    .putExtra(MovieDetailActivity.MOVIE_INFO, movie)
+            val activityOptions = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(this, android.support.v4.util.Pair<View, String>(
+                            poster, getString(R.string.detail_poster_transition_name)))
+            ActivityCompat.startActivity(this, intent, activityOptions.toBundle())
+        }
     }
 
     private fun setupDrawer() {

@@ -18,9 +18,10 @@ import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmovieskotlin.domain.model.video.VideoModel
 import com.nex3z.popularmovieskotlin.presentation.ui.UiThread
 import com.nex3z.popularmovieskotlin.presentation.ui.base.BaseFragment
+import com.nex3z.popularmovieskotlin.presentation.ui.base.HasPresenter
 import kotlinx.android.synthetic.main.content_movie_video.*
 
-class MovieVideoFragment : BaseFragment(), VideoView {
+class MovieVideoFragment : BaseFragment(), VideoView, HasPresenter<VideoPresenter> {
 
     private lateinit var movie: MovieModel
     private val presenter: VideoPresenter
@@ -48,6 +49,10 @@ class MovieVideoFragment : BaseFragment(), VideoView {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+    }
+
+    override fun getPresenter(): VideoPresenter {
+        return presenter
     }
 
     override fun showLoading() {
