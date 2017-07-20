@@ -25,6 +25,7 @@
         android:textSize="24sp"
         android:maxLines="3"
         android:ellipsize="end"
+        android:text="@string/app_name"
         tools:text="Zootopia"/>
 
 </FrameLayout>
