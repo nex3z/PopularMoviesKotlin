@@ -34,5 +34,6 @@ dependencies {
     androidTestImplementation domainTestDependencies.runner
     androidTestImplementation domainTestDependencies.espressoCore
 
+    implementation domainDependencies.kotlinStdlibJre7
     implementation domainDependencies.rxJava
 }

@@ -33,6 +33,7 @@ dependencies {
     androidTestImplementation dataTestDependencies.runner
     androidTestImplementation dataTestDependencies.espressoCore
 
+    implementation dataDependencies.kotlinStdlibJre7
     implementation dataDependencies.roomRuntime
     annotationProcessor  dataDependencies.roomCompiler
     implementation dataDependencies.roomRxjava2

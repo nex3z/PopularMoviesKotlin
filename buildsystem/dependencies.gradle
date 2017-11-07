@@ -26,6 +26,7 @@ ext {
     espressoVersion = '3.0.1'
 
     dataDependencies = [
+            kotlinStdlibJre7: "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
             roomRuntime: "android.arch.persistence.room:runtime:${roomVersion}",
             roomCompiler: "android.arch.persistence.room:compiler:${roomVersion}",
             roomRxjava2: "android.arch.persistence.room:rxjava2:${roomVersion}",
@@ -45,6 +46,7 @@ ext {
     ]
 
     domainDependencies = [
+            kotlinStdlibJre7: "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
             rxJava: "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
     ]
 
