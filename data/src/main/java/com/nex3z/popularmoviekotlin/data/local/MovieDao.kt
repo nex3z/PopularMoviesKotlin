@@ -1,4 +1,4 @@
-package com.nex3z.popularmoviekotlin.data.entity.local
+package com.nex3z.popularmoviekotlin.data.local
 
 import android.arch.persistence.room.*
 import com.nex3z.popularmoviekotlin.data.entity.discover.MovieEntity
