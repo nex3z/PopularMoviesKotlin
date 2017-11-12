@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -35,7 +36,7 @@ dependencies {
 
     implementation dataDependencies.kotlinStdlibJre7
     implementation dataDependencies.roomRuntime
-    annotationProcessor  dataDependencies.roomCompiler
+    kapt dataDependencies.roomCompiler
     implementation dataDependencies.roomRxjava2
     implementation dataDependencies.okHttp
     implementation dataDependencies.okHttpLoggingInterceptor
