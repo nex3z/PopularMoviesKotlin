@@ -34,6 +34,7 @@ static def getApiKey() {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':data')
     implementation project(path: ':domain')
 
     def presentationDependencies = rootProject.ext.presentationDependencies
