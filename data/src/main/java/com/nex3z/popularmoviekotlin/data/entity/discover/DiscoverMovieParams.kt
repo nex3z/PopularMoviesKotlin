@@ -12,6 +12,11 @@ class DiscoverMovieParams(val page: Int, val sortBy: SortBy) {
     sealed class SortBy(val value: String) {
         class ReleaseDateDesc() : SortBy("release_date.desc")
         class PopularityDesc() : SortBy("popularity.desc")
+
+        companion object {
+            val RELEASE_DATE_DESC = ReleaseDateDesc()
+            val POPULARITY_DESC = PopularityDesc()
+        }
     }
 
 }

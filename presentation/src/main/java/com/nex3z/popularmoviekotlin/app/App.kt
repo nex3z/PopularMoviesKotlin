@@ -1,6 +1,7 @@
 package com.nex3z.popularmoviekotlin.app
 
 import android.app.Application
+import android.content.Context
 import com.nex3z.popularmoviekotlin.BuildConfig
 import com.nex3z.popularmoviekotlin.UiThread
 import com.nex3z.popularmoviekotlin.data.net.RestClient
@@ -12,6 +13,8 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        appContext = applicationContext
         initService()
     }
 
@@ -22,6 +25,9 @@ class App : Application() {
     }
 
     companion object {
+        lateinit var appContext: Context
+            private set
+
         lateinit var service: PopMovieService
     }
 }
