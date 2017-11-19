@@ -19,6 +19,7 @@ ext {
     rxAndroidVersion = '2.0.1'
     swipyVersion = '1.2.3'
     picassoVersion = '2.5.2'
+    kenburnsViewVersion = '1.0.7'
 
     // Testing
     jUnitVersion = '4.12'
@@ -67,6 +68,7 @@ ext {
             rxAndroid: "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             swipy: "com.github.omadahealth:swipy:${swipyVersion}@aar",
             picasso: "com.squareup.picasso:picasso:${picassoVersion}",
+            kenburnsView: "com.flaviofaria:kenburnsview:${kenburnsViewVersion}",
     ]
 
     presentationTestDependencies = [

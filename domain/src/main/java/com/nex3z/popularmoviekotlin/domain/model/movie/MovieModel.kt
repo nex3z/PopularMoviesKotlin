@@ -1,5 +1,8 @@
 package com.nex3z.popularmoviekotlin.domain.model.movie
 
+import android.os.Parcel
+import android.os.Parcelable
+
 data class MovieModel(
         val posterPath: String = "",
         val adult: Boolean = false,
@@ -16,8 +19,7 @@ data class MovieModel(
         val video: Boolean = false,
         val voteAverage: Double = 0.0,
         var favourite: Boolean = false
-) {
-
+) : Parcelable {
     sealed class PosterSize(val value: String) {
         class W92() : PosterSize("w92")
         class W154() : PosterSize("w154")
@@ -60,8 +62,52 @@ data class MovieModel(
         return BASE_URL + size.value + "/" + posterPath
     }
 
+    constructor(source: Parcel) : this(
+            source.readString(),
+            1 == source.readInt(),
+            source.readString(),
+            source.readString(),
+            ArrayList<Int>().apply { source.readList(this, Int::class.java.classLoader) },
+            source.readLong(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readDouble(),
+            source.readInt(),
+            1 == source.readInt(),
+            source.readDouble(),
+            1 == source.readInt()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(posterPath)
+        writeInt((if (adult) 1 else 0))
+        writeString(overview)
+        writeString(releaseDate)
+        writeList(genreIds)
+        writeLong(id)
+        writeString(originalTitle)
+        writeString(originalLanguage)
+        writeString(title)
+        writeString(backdropPath)
+        writeDouble(popularity)
+        writeInt(voteCount)
+        writeInt((if (video) 1 else 0))
+        writeDouble(voteAverage)
+        writeInt((if (favourite) 1 else 0))
+    }
+
     companion object {
         private val BASE_URL = "http://image.tmdb.org/t/p/"
+
+        @JvmField
+        val CREATOR: Parcelable.Creator<MovieModel> = object : Parcelable.Creator<MovieModel> {
+            override fun createFromParcel(source: Parcel): MovieModel = MovieModel(source)
+            override fun newArray(size: Int): Array<MovieModel?> = arrayOfNulls(size)
+        }
     }
 }
 

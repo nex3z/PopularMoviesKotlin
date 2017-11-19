@@ -53,5 +53,6 @@ dependencies {
     implementation presentationDependencies.rxAndroid
     implementation presentationDependencies.swipy
     implementation presentationDependencies.picasso
+    implementation presentationDependencies.kenburnsView
 
 }

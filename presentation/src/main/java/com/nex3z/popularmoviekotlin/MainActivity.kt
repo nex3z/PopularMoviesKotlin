@@ -1,5 +1,6 @@
 package com.nex3z.popularmoviekotlin
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.nex3z.popularmoviekotlin.R
+import com.nex3z.popularmoviekotlin.detail.MovieDetailActivity
 import com.nex3z.popularmoviekotlin.discover.DiscoverMovieFragment
 import com.nex3z.popularmoviekotlin.discover.MovieDetailNavigator
 import com.nex3z.popularmoviekotlin.domain.model.movie.MovieModel
@@ -94,6 +96,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun navigateToDetail(movie: MovieModel) {
+        val intent = Intent(this, MovieDetailActivity::class.java)
+        intent.putExtra(MovieDetailActivity.ARG_MOVIE, movie)
+        startActivity(intent)
     }
 
     private fun showDiscoverMovies() {

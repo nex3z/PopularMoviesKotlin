@@ -6,6 +6,14 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="caption_tab_movie_detail">Detail</string>
+    <string name="caption_tab_movie_video">Video</string>
+    <string name="caption_tab_movie_review">Review</string>
+
+    <string name="caption_share">Share</string>
+    <string name="caption_share_hash_tag">\u0020#PopularMovie</string>
+    <string name="msg_nothing_here">Nothing here.</string>
+
     <string name="caption_genre_action">Action</string>
     <string name="caption_genre_adventure">Adventure</string>
     <string name="caption_genre_animation">Animation</string>
@@ -25,9 +33,5 @@
     <string name="caption_genre_thriller">Thriller</string>
     <string name="caption_genre_war">War</string>
     <string name="caption_genre_western">Western</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
 </resources>
