@@ -28,7 +28,7 @@ class DiscoverMoviePresenter : BasePresenter<DiscoverMovieView>() {
 
     fun onMovieClicked(position: Int) {
         if (position >= 0 && position < movies.size) {
-            view?.renderMovieDetail(movies.get(position))
+            view?.renderMovieDetail(movies[position])
         }
     }
 

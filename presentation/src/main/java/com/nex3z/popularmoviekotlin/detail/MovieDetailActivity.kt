@@ -16,6 +16,8 @@ import android.view.View
 import com.nex3z.popularmoviekotlin.MainActivity
 import com.nex3z.popularmoviekotlin.R
 import com.nex3z.popularmoviekotlin.detail.info.MovieInfoFragment
+import com.nex3z.popularmoviekotlin.detail.review.MovieReviewFragment
+import com.nex3z.popularmoviekotlin.detail.video.MovieVideoFragment
 import com.nex3z.popularmoviekotlin.domain.model.movie.MovieModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_movie_detail.*
