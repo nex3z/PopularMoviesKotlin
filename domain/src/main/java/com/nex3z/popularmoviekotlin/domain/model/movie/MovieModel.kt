@@ -20,38 +20,22 @@ data class MovieModel(
         val voteAverage: Double = 0.0,
         var favourite: Boolean = false
 ) : Parcelable {
-    sealed class PosterSize(val value: String) {
-        class W92() : PosterSize("w92")
-        class W154() : PosterSize("w154")
-        class W185() : PosterSize("w185")
-        class W342() : PosterSize("w342")
-        class W500() : PosterSize("w500")
-        class W780() : PosterSize("w780")
-        class Original() : PosterSize("original")
 
-        companion object {
-            val W92 = W92()
-            val W154 = W154()
-            val W185 = W185()
-            val W342 = W342()
-            val W500 = W500()
-            val W780 = W780()
-            val ORIGINAL = Original()
-        }
+    enum class PosterSize(val value: String) {
+        W92("w92"),
+        W154("w154"),
+        W185("w185"),
+        W342("w342"),
+        W500("w500"),
+        W780("w780"),
+        Original("original")
     }
 
-    sealed class BackdropSize(val value: String) {
-        class W300() : BackdropSize("w300")
-        class W780() : BackdropSize("w780")
-        class W1280() : BackdropSize("w1280")
-        class Original() : BackdropSize("original")
-
-        companion object {
-            val W300 = W300()
-            val W780 = W780()
-            val W1280 = W1280()
-            val ORIGINAL = Original()
-        }
+    enum class BackdropSize(val value: String) {
+        W300("w300"),
+        W780("w780"),
+        W1280("w1280"),
+        Original("original")
     }
 
     fun getPosterUrl(size: PosterSize): String {

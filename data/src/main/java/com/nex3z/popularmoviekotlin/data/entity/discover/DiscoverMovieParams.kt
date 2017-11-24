@@ -1,22 +1,29 @@
 package com.nex3z.popularmoviekotlin.data.entity.discover
 
-class DiscoverMovieParams(val page: Int, val sortBy: SortBy) {
+class DiscoverMovieParams(page: Int, sortBy: SortBy) {
 
     val params = mutableMapOf<String, String>()
 
+    var page: Int = 1
+        set(value) {
+            field = value
+            params.put("page", value.toString())
+        }
+
+    var sortBy: SortBy = SortBy.RELEASE_DATE_DESC
+        set(value) {
+            field = value
+            params.put("sort_by", sortBy.value)
+        }
+
     init {
-        params.put("page", page.toString())
-        params.put("sort_by", sortBy.value)
+        this@DiscoverMovieParams.page = page
+        this@DiscoverMovieParams.sortBy = sortBy
     }
 
-    sealed class SortBy(val value: String) {
-        class ReleaseDateDesc() : SortBy("release_date.desc")
-        class PopularityDesc() : SortBy("popularity.desc")
-
-        companion object {
-            val RELEASE_DATE_DESC = ReleaseDateDesc()
-            val POPULARITY_DESC = PopularityDesc()
-        }
+    enum class SortBy(val value: String) {
+        RELEASE_DATE_DESC("release_date.desc"),
+        POPULARITY_DESC("popularity.desc")
     }
 
 }
