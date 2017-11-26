@@ -17,7 +17,12 @@ class Converter {
             sb.append(item)
             sb.append(",")
         }
-        return sb.toString()
+        var result = sb.toString()
+        if (!result.isEmpty()) {
+            result = result.substring(0, result.length - 1)
+        }
+
+        return result
     }
 
 }
