@@ -5,8 +5,8 @@ import com.nex3z.popularmoviekotlin.domain.model.video.VideoModel
 import com.nex3z.popularmoviekotlin.domain.model.video.transform
 import io.reactivex.Observable
 
-class GetVideosUseCase(context: Context)
-    : BaseUseCase<List<VideoModel>, GetVideosUseCase.Params>(context) {
+class GetVideoUseCase(context: Context)
+    : BaseUseCase<List<VideoModel>, GetVideoUseCase.Params>(context) {
 
     override fun buildUseCaseObservable(params: Params): Observable<List<VideoModel>> {
         return context.movieRepository

@@ -3,17 +3,17 @@ package com.nex3z.popularmoviekotlin.detail.video
 import com.nex3z.popularmoviekotlin.app.App
 import com.nex3z.popularmoviekotlin.base.BasePresenter
 import com.nex3z.popularmoviekotlin.domain.interactor.DefaultObserver
-import com.nex3z.popularmoviekotlin.domain.interactor.GetVideosUseCase
+import com.nex3z.popularmoviekotlin.domain.interactor.GetVideoUseCase
 import com.nex3z.popularmoviekotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmoviekotlin.domain.model.video.VideoModel
 
 class MovieVideoPresenter(val movie: MovieModel) : BasePresenter<MovieVideoView>() {
 
-    private val getVideosUseCase: GetVideosUseCase = App.service.create(GetVideosUseCase::class)
+    private val getVideoUseCase: GetVideoUseCase = App.service.create(GetVideoUseCase::class)
     private val videos: MutableList<VideoModel> = mutableListOf()
 
     override fun destroy() {
-        getVideosUseCase.dispose()
+        getVideoUseCase.dispose()
         super.destroy()
     }
 
@@ -28,7 +28,7 @@ class MovieVideoPresenter(val movie: MovieModel) : BasePresenter<MovieVideoView>
     }
 
     fun fetchVideos() {
-        getVideosUseCase.execute(VideoObserver(), GetVideosUseCase.Params.forMovie(movie.id))
+        getVideoUseCase.execute(VideoObserver(), GetVideoUseCase.Params.forMovie(movie.id))
     }
 
     private inner class VideoObserver : DefaultObserver<List<VideoModel>>() {

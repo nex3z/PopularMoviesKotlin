@@ -5,20 +5,25 @@ import com.nex3z.popularmoviekotlin.app.App
 import com.nex3z.popularmoviekotlin.base.BasePresenter
 import com.nex3z.popularmoviekotlin.data.entity.discover.DiscoverMovieParams
 import com.nex3z.popularmoviekotlin.domain.interactor.DefaultObserver
-import com.nex3z.popularmoviekotlin.domain.interactor.DiscoverMoviesUseCase
+import com.nex3z.popularmoviekotlin.domain.interactor.DiscoverMovieUseCase
+import com.nex3z.popularmoviekotlin.domain.interactor.SetFavouriteMovieUseCase
 import com.nex3z.popularmoviekotlin.domain.model.movie.MovieModel
 
 class DiscoverMoviePresenter : BasePresenter<DiscoverMovieView>() {
 
-    private val discoverMovieUseCase: DiscoverMoviesUseCase
-            = App.service.create(DiscoverMoviesUseCase::class)
+    private val discoverMovieUseCase: DiscoverMovieUseCase
+            = App.service.create(DiscoverMovieUseCase::class)
+
+    private val setFavouriteMovieUseCase: SetFavouriteMovieUseCase
+            = App.service.create(SetFavouriteMovieUseCase::class)
 
     private var page: Int = FIRST_PAGE
     private val movies: MutableList<MovieModel> = mutableListOf()
 
     override fun destroy() {
-        super.destroy()
         discoverMovieUseCase.dispose()
+        setFavouriteMovieUseCase.dispose()
+        super.destroy()
     }
 
     fun init() {
@@ -33,7 +38,9 @@ class DiscoverMoviePresenter : BasePresenter<DiscoverMovieView>() {
     }
 
     fun toggleFavourite(position: Int) {
-
+        val movie = movies[position]
+        setFavouriteMovieUseCase.execute(SetFavoriteObserver(movie, position),
+                SetFavouriteMovieUseCase.Params(movie, !movie.favourite))
     }
 
     fun refreshMovie() {
@@ -75,6 +82,24 @@ class DiscoverMoviePresenter : BasePresenter<DiscoverMovieView>() {
         override fun onError(throwable: Throwable) {
             super.onError(throwable)
             view?.hideLoading()
+            view?.showError(throwable.message)
+        }
+    }
+
+    private inner class SetFavoriteObserver
+        internal constructor(val movie: MovieModel, val position: Int)
+        : DefaultObserver<Boolean>() {
+
+        override fun onNext(data: Boolean) {
+            super.onNext(data)
+            movie.favourite = data
+            if (position < movies.size && movies[position].id == movie.id) {
+                view?.notifyMovieChanged(position)
+            }
+        }
+
+        override fun onError(throwable: Throwable) {
+            super.onError(throwable)
             view?.showError(throwable.message)
         }
     }

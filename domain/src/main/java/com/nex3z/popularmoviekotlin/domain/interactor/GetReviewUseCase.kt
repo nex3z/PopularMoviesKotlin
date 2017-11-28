@@ -5,8 +5,8 @@ import com.nex3z.popularmoviekotlin.domain.model.review.ReviewModel
 import com.nex3z.popularmoviekotlin.domain.model.review.transform
 import io.reactivex.Observable
 
-class GetReviewsUseCase(context: Context)
-    : BaseUseCase<List<ReviewModel>, GetReviewsUseCase.Params>(context) {
+class GetReviewUseCase(context: Context)
+    : BaseUseCase<List<ReviewModel>, GetReviewUseCase.Params>(context) {
 
     override fun buildUseCaseObservable(params: Params): Observable<List<ReviewModel>> {
         return context.movieRepository

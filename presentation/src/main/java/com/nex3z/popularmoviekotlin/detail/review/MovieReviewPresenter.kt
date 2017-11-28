@@ -3,16 +3,16 @@ package com.nex3z.popularmoviekotlin.detail.review
 import com.nex3z.popularmoviekotlin.app.App
 import com.nex3z.popularmoviekotlin.base.BasePresenter
 import com.nex3z.popularmoviekotlin.domain.interactor.DefaultObserver
-import com.nex3z.popularmoviekotlin.domain.interactor.GetReviewsUseCase
+import com.nex3z.popularmoviekotlin.domain.interactor.GetReviewUseCase
 import com.nex3z.popularmoviekotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmoviekotlin.domain.model.review.ReviewModel
 
 class MovieReviewPresenter(val movie: MovieModel) : BasePresenter<MovieReviewView>() {
 
-    private val getReviewsUseCase: GetReviewsUseCase = App.service.create(GetReviewsUseCase::class)
+    private val getReviewUseCase: GetReviewUseCase = App.service.create(GetReviewUseCase::class)
 
     override fun destroy() {
-        getReviewsUseCase.dispose()
+        getReviewUseCase.dispose()
         super.destroy()
     }
 
@@ -21,7 +21,7 @@ class MovieReviewPresenter(val movie: MovieModel) : BasePresenter<MovieReviewVie
     }
 
     fun fetchReviews() {
-        getReviewsUseCase.execute(ReviewObserver(), GetReviewsUseCase.Params.forMovie(movie.id))
+        getReviewUseCase.execute(ReviewObserver(), GetReviewUseCase.Params.forMovie(movie.id))
     }
 
     private inner class ReviewObserver : DefaultObserver<List<ReviewModel>>() {
