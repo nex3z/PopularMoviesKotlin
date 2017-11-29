@@ -1,7 +1,6 @@
 package com.nex3z.popularmoviekotlin.discover
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,12 +30,11 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
             return
         }
         val movie = movies[position]
-        holder.itemView.tv_item_movie_vote.text = movie.title
+        holder.itemView.tv_item_movie_vote.text = movie.voteAverage.toString()
         holder.itemView.cb_item_movie_favourite.isChecked = movie.favourite
         Picasso.with(holder.itemView.context)
                 .load(movie.getPosterUrl(MovieModel.PosterSize.W342))
                 .into(holder.itemView.iv_item_movie_poster)
-
     }
 
     override fun getItemCount(): Int {
