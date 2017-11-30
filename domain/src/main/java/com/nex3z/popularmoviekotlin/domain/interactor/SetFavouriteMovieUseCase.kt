@@ -23,7 +23,7 @@ class SetFavouriteMovieUseCase(context: Context)
 
     class Params(movie: MovieModel, val favourite: Boolean) {
 
-        val entity: MovieEntity = transform(movie)
+        val entity: MovieEntity = movie.transform()
 
     }
 }

@@ -1,5 +1,6 @@
 package com.nex3z.popularmoviekotlin.domain.interactor
 
+import com.nex3z.popularmoviekotlin.data.entity.discover.MovieEntity
 import com.nex3z.popularmoviekotlin.domain.Context
 import com.nex3z.popularmoviekotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmoviekotlin.domain.model.movie.transform
@@ -11,7 +12,7 @@ class GetFavouriteMovieUseCase(context: Context)
     override fun buildUseCaseObservable(params: Unit): Observable<List<MovieModel>> {
         return context.movieRepository
                 .getFavouriteMovies()
-                .map{ transform(it, true) }
+                .map{ it.map(MovieEntity::transform) }
                 .toObservable()
     }
 

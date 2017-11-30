@@ -1,5 +1,6 @@
 package com.nex3z.popularmoviekotlin.domain.interactor
 
+import com.nex3z.popularmoviekotlin.data.entity.video.GetMovieVideosResponse
 import com.nex3z.popularmoviekotlin.domain.Context
 import com.nex3z.popularmoviekotlin.domain.model.video.VideoModel
 import com.nex3z.popularmoviekotlin.domain.model.video.transform
@@ -11,7 +12,7 @@ class GetVideoUseCase(context: Context)
     override fun buildUseCaseObservable(params: Params): Observable<List<VideoModel>> {
         return context.movieRepository
                 .getVideos(params.movieId)
-                .map(::transform)
+                .map(GetMovieVideosResponse::transform)
                 .toObservable()
     }
 
