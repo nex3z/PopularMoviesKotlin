@@ -1,5 +1,6 @@
 package com.nex3z.popularmoviekotlin.domain.interactor
 
+import com.nex3z.popularmoviekotlin.data.entity.review.GetMovieReviewsResponse
 import com.nex3z.popularmoviekotlin.domain.Context
 import com.nex3z.popularmoviekotlin.domain.model.review.ReviewModel
 import com.nex3z.popularmoviekotlin.domain.model.review.transform
@@ -11,7 +12,7 @@ class GetReviewUseCase(context: Context)
     override fun buildUseCaseObservable(params: Params): Observable<List<ReviewModel>> {
         return context.movieRepository
                 .getReviews(params.movieId)
-                .map(::transform)
+                .map(GetMovieReviewsResponse::transform)
                 .toObservable()
     }
 

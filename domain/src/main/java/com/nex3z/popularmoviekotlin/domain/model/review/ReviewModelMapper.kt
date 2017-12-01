@@ -3,15 +3,16 @@ package com.nex3z.popularmoviekotlin.domain.model.review
 import com.nex3z.popularmoviekotlin.data.entity.review.GetMovieReviewsResponse
 import com.nex3z.popularmoviekotlin.data.entity.review.ReviewEntity
 
-fun transform(response: GetMovieReviewsResponse): List<ReviewModel> {
-    return response.results.map(::transform)
+fun GetMovieReviewsResponse.transform(): List<ReviewModel> {
+    return this.results.map(ReviewEntity::transform)
 }
 
-fun transform(entity: ReviewEntity): ReviewModel {
+fun ReviewEntity.transform(): ReviewModel {
     return ReviewModel(
-            id = entity.id,
-            author = entity.author,
-            content = entity.content,
-            url = entity.url
+            id = this.id,
+            author = this.author,
+            content = this.content,
+            url = this.url
     )
+
 }

@@ -11,7 +11,7 @@ class GetFavouriteMovieUseCase(context: Context)
     override fun buildUseCaseObservable(params: Unit): Observable<List<MovieModel>> {
         return context.movieRepository
                 .getFavouriteMovies()
-                .map{ transform(it, true) }
+                .map{ it.map { it.transform(true) } }
                 .toObservable()
     }
 
