@@ -12,7 +12,7 @@ abstract class UseCase<T, Params>(
         private val threadExecutor: ThreadExecutor,
         private val postExecutionThread: PostExecutionThread) {
 
-    private val disposables: CompositeDisposable = CompositeDisposable()
+    private var disposables: CompositeDisposable = CompositeDisposable()
 
     internal abstract fun buildUseCaseObservable(params: Params): Observable<T>
 
@@ -27,6 +27,7 @@ abstract class UseCase<T, Params>(
         if (!disposables.isDisposed) {
             disposables.dispose()
         }
+        disposables = CompositeDisposable()
     }
 
     private fun addDisposable(disposable: Disposable) {
