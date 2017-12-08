@@ -1,4 +1,4 @@
-package com.nex3z.popularmoviekotlin.data.local
+package com.nex3z.popularmoviekotlin.data.local.room
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
