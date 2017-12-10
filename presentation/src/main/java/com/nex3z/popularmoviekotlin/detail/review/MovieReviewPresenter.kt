@@ -9,7 +9,7 @@ import com.nex3z.popularmoviekotlin.domain.model.review.ReviewModel
 
 class MovieReviewPresenter(val movie: MovieModel) : BasePresenter<MovieReviewView>() {
 
-    private val getReviewUseCase: GetReviewUseCase = App.service.create(GetReviewUseCase::class)
+    private val getReviewUseCase: GetReviewUseCase = App.service.create(::GetReviewUseCase)
 
     override fun destroy() {
         getReviewUseCase.dispose()

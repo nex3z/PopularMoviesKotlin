@@ -9,7 +9,7 @@ import com.nex3z.popularmoviekotlin.domain.model.video.VideoModel
 
 class MovieVideoPresenter(val movie: MovieModel) : BasePresenter<MovieVideoView>() {
 
-    private val getVideoUseCase: GetVideoUseCase = App.service.create(GetVideoUseCase::class)
+    private val getVideoUseCase: GetVideoUseCase = App.service.create(::GetVideoUseCase)
     private val videos: MutableList<VideoModel> = mutableListOf()
 
     override fun destroy() {

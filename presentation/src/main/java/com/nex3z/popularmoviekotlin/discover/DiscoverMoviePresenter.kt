@@ -12,10 +12,10 @@ import com.nex3z.popularmoviekotlin.domain.model.movie.MovieModel
 class DiscoverMoviePresenter : BasePresenter<DiscoverMovieView>() {
 
     private val discoverMovieUseCase: DiscoverMovieUseCase
-            = App.service.create(DiscoverMovieUseCase::class)
+            = App.service.create(::DiscoverMovieUseCase)
 
     private val setFavouriteMovieUseCase: SetFavouriteMovieUseCase
-            = App.service.create(SetFavouriteMovieUseCase::class)
+            = App.service.create(::SetFavouriteMovieUseCase)
 
     private var page: Int = FIRST_PAGE
     private val movies: MutableList<MovieModel> = mutableListOf()

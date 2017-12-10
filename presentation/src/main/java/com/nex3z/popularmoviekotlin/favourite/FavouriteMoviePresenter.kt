@@ -11,9 +11,9 @@ import com.nex3z.popularmoviekotlin.domain.model.movie.MovieModel
 class FavouriteMoviePresenter : BasePresenter<FavouriteMovieVIew>() {
 
     private val getFavouriteMovieUseCase: GetFavouriteMovieUseCase
-            = App.service.create(GetFavouriteMovieUseCase::class)
+            = App.service.create(::GetFavouriteMovieUseCase)
     private val setFavouriteMovieUseCase: SetFavouriteMovieUseCase
-            = App.service.create(SetFavouriteMovieUseCase::class)
+            = App.service.create(::SetFavouriteMovieUseCase)
 
     private val movies: MutableList<MovieModel> = mutableListOf()
 
