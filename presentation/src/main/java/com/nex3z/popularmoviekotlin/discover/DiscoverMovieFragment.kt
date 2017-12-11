@@ -3,7 +3,6 @@ package com.nex3z.popularmoviekotlin.discover
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,8 +85,7 @@ class DiscoverMovieFragment :
             when (it) {
                 SwipyRefreshLayoutDirection.TOP -> presenter.refreshMovie()
                 SwipyRefreshLayoutDirection.BOTTOM -> presenter.loadMoreMovie()
-                else -> {
-                }
+                else -> { }
             }
         }
 
@@ -100,13 +98,11 @@ class DiscoverMovieFragment :
             }
         }
 
-        rv_discover_movie_list.adapter = adapter
-
-        val layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-        rv_discover_movie_list.setLayoutManager(layoutManager)
-
-        val decoration = SpacingItemDecoration(ViewUtil.dpToPx(4.0f).toInt())
-        rv_discover_movie_list.addItemDecoration(decoration)
+        with(rv_discover_movie_list) {
+            adapter = this@DiscoverMovieFragment.adapter
+            layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+            addItemDecoration(SpacingItemDecoration(ViewUtil.dpToPx(4.0f).toInt()))
+        }
     }
 
     private fun initPresenter() {

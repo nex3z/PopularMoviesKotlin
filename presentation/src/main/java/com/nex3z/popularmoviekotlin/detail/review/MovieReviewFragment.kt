@@ -57,13 +57,11 @@ class MovieReviewFragment : BaseFragment(), MovieReviewView, HasPresenter<MovieR
     }
 
     private fun initView() {
-        rv_movie_review_list.adapter = adapter
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        rv_movie_review_list.layoutManager = layoutManager
-
-        val dividerItemDecoration = DividerItemDecoration(context,
-                layoutManager.orientation)
-        rv_movie_review_list.addItemDecoration(dividerItemDecoration)
+        with(rv_movie_review_list) {
+            adapter = this@MovieReviewFragment.adapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
     }
 
     private fun initPresenter() {

@@ -72,14 +72,12 @@ class MovieVideoFragment : BaseFragment(), MovieVideoView, HasPresenter<MovieVid
                 presenter.onVideoClick(position)
             }
         }
-        rv_movie_video_list.adapter = adapter
 
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        rv_movie_video_list.layoutManager = layoutManager
-
-        val dividerItemDecoration = DividerItemDecoration(context,
-                layoutManager.orientation)
-        rv_movie_video_list.addItemDecoration(dividerItemDecoration)
+        with(rv_movie_video_list) {
+            adapter = this@MovieVideoFragment.adapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
     }
 
     private fun initPresenter() {
