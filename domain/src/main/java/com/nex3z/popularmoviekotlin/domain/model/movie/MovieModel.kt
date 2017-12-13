@@ -2,13 +2,16 @@ package com.nex3z.popularmoviekotlin.domain.model.movie
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.nex3z.popularmoviekotlin.domain.misc.EnumConverter
+import com.nex3z.popularmoviekotlin.domain.misc.HasValue
+import com.nex3z.popularmoviekotlin.domain.misc.buildValueMap
 
 data class MovieModel(
         val posterPath: String = "",
         val adult: Boolean = false,
         val overview: String = "",
         val releaseDate: String = "",
-        val genreIds: List<Int> = emptyList(),
+        val genreIds: List<Genre> = emptyList(),
         val id: Long = 0,
         val originalTitle: String = "",
         val originalLanguage: String = "",
@@ -21,7 +24,32 @@ data class MovieModel(
         var favourite: Boolean = false
 ) : Parcelable {
 
-    enum class PosterSize(val value: String) {
+    enum class Genre(override val value: Int) : HasValue<Int> {
+        ADVENTURE(12),
+        FANTASY(14),
+        ANIMATION(16),
+        DRAMA(18),
+        HORROR(27),
+        ACTION(28),
+        COMEDY(35),
+        HISTORY(36),
+        WESTERN(37),
+        THRILLER(53),
+        CRIME(80),
+        DOCUMENTARY(99),
+        SCIENCE_FICTION(878),
+        MYSTERY(9648),
+        MUSIC(10402),
+        ROMANCE(10749),
+        FAMILY(10751),
+        WAR(10752),
+        TV_MOVIE(10770),
+        UNKNOWN(-1);
+
+        companion object : EnumConverter<Int, Genre>(buildValueMap())
+    }
+
+    enum class PosterSize(override val value: String) : HasValue<String> {
         W92("w92"),
         W154("w154"),
         W185("w185"),
@@ -31,7 +59,7 @@ data class MovieModel(
         Original("original")
     }
 
-    enum class BackdropSize(val value: String) {
+    enum class BackdropSize(override val value: String) : HasValue<String> {
         W300("w300"),
         W780("w780"),
         W1280("w1280"),
@@ -51,7 +79,7 @@ data class MovieModel(
             1 == source.readInt(),
             source.readString(),
             source.readString(),
-            ArrayList<Int>().apply { source.readList(this, Int::class.java.classLoader) },
+            ArrayList<Genre>().apply { source.readList(this, Genre::class.java.classLoader) },
             source.readLong(),
             source.readString(),
             source.readString(),

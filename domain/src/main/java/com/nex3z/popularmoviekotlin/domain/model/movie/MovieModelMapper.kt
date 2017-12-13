@@ -14,7 +14,7 @@ fun MovieEntity.transform(favourite: Boolean = false): MovieModel {
             adult = this.adult,
             overview = this.overview,
             releaseDate = this.release_date,
-            genreIds = this.genre_ids,
+            genreIds = toGenre(this.genre_ids),
             id = this.id,
             originalTitle = this.original_title,
             originalLanguage = this.original_language,
@@ -34,7 +34,7 @@ fun MovieModel.transform(): MovieEntity {
             adult = this.adult,
             overview = this.overview,
             release_date = this.releaseDate,
-            genre_ids = this.genreIds,
+            genre_ids = fromGenre(this.genreIds),
             id = this.id,
             original_title = this.originalTitle,
             original_language = this.originalLanguage,
@@ -46,3 +46,10 @@ fun MovieModel.transform(): MovieEntity {
             vote_average = this.voteAverage
     )
 }
+
+fun toGenre(genres: List<Int>?): List<MovieModel.Genre> =
+        genres?.map { MovieModel.Genre.fromValue(it, MovieModel.Genre.UNKNOWN) }
+                ?: emptyList()
+
+fun fromGenre(genres: List<MovieModel.Genre>?): List<Int> =
+        genres?.map(MovieModel.Genre::value)?: emptyList()
