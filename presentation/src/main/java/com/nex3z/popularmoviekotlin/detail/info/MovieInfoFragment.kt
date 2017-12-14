@@ -8,7 +8,7 @@ import com.nex3z.popularmoviekotlin.R
 import com.nex3z.popularmoviekotlin.base.BaseFragment
 import com.nex3z.popularmoviekotlin.base.HasPresenter
 import com.nex3z.popularmoviekotlin.domain.model.movie.MovieModel
-import com.nex3z.popularmoviekotlin.util.GenreUtil
+import com.nex3z.popularmoviekotlin.util.getNames
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_movie_info.*
 
@@ -39,7 +39,7 @@ class MovieInfoFragment : BaseFragment(), MovieInfoView, HasPresenter<MovieInfoP
     override fun renderMovie(movie: MovieModel) {
         tv_item_movie_vote_average.text = movie.voteAverage.toString()
         tv_item_movie_release_date.text = movie.releaseDate
-        tv_item_movie_genre.text = GenreUtil.getGenre(context, movie.genreIds)
+        tv_item_movie_genre.text = movie.genreIds.getNames()
         tv_movie_info_overview.text = movie.overview
         Picasso.with(context)
                 .load(movie.getPosterUrl(MovieModel.PosterSize.W342))
