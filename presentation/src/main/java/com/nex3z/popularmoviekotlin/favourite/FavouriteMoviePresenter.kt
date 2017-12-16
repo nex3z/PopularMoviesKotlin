@@ -30,7 +30,7 @@ class FavouriteMoviePresenter : BasePresenter<FavouriteMovieVIew>() {
     fun refresh() {
         movies.clear()
         view?.renderMovies(movies)
-        getFavouriteMovieUseCase.execute(FavouriteMovieObserver(), Unit)
+        getFavouriteMovieUseCase.execute(FavouriteMovieObserver(), null)
     }
 
     fun onMovieClicked(position: Int) {
