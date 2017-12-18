@@ -13,7 +13,7 @@ import com.nex3z.popularmoviekotlin.discover.MovieAdapter
 import com.nex3z.popularmoviekotlin.discover.MovieDetailNavigator
 import com.nex3z.popularmoviekotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmoviekotlin.misc.SpacingItemDecoration
-import com.nex3z.popularmoviekotlin.util.ViewUtil
+import com.nex3z.popularmoviekotlin.util.dpToPx
 import kotlinx.android.synthetic.main.fragment_favourite_movie.*
 
 class FavouriteMovieFragment :
@@ -88,7 +88,7 @@ class FavouriteMovieFragment :
         with(rv_favourite_movie_list) {
             adapter = this@FavouriteMovieFragment.adapter
             layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-            addItemDecoration(SpacingItemDecoration(ViewUtil.dpToPx(4.0f).toInt()))
+            addItemDecoration(SpacingItemDecoration(dpToPx(4.0f).toInt()))
         }
     }
 

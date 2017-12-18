@@ -11,7 +11,7 @@ import com.nex3z.popularmoviekotlin.base.BaseFragment
 import com.nex3z.popularmoviekotlin.base.HasPresenter
 import com.nex3z.popularmoviekotlin.domain.model.movie.MovieModel
 import com.nex3z.popularmoviekotlin.misc.SpacingItemDecoration
-import com.nex3z.popularmoviekotlin.util.ViewUtil
+import com.nex3z.popularmoviekotlin.util.dpToPx
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import kotlinx.android.synthetic.main.fragment_discover_movie.*
 
@@ -101,7 +101,7 @@ class DiscoverMovieFragment :
         with(rv_discover_movie_list) {
             adapter = this@DiscoverMovieFragment.adapter
             layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-            addItemDecoration(SpacingItemDecoration(ViewUtil.dpToPx(4.0f).toInt()))
+            addItemDecoration(SpacingItemDecoration(dpToPx(4.0f).toInt()))
         }
     }
 
