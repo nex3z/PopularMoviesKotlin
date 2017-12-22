@@ -85,9 +85,12 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun renderMovie() {
         ctl_movie_detail.setTitle(movie.title)
-        Picasso.with(this)
-                .load(movie.getBackdropUrl(MovieModel.BackdropSize.W780))
-                .into(kbv_movie_detail_backdrop)
+        val backdropUrl = movie.getBackdropUrl(MovieModel.BackdropSize.W780)
+        if (backdropUrl != null) {
+            Picasso.with(this)
+                    .load(backdropUrl)
+                    .into(kbv_movie_detail_backdrop)
+        }
     }
 
     private fun createShareMovieIntent(): Intent {

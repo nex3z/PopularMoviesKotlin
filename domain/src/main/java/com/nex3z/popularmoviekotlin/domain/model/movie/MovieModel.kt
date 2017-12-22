@@ -16,7 +16,7 @@ data class MovieModel(
         val originalTitle: String = "",
         val originalLanguage: String = "",
         val title: String = "",
-        val backdropPath: String = "",
+        val backdropPath: String? = null,
         val popularity: Double = 0.0,
         val voteCount: Int = 0,
         val video: Boolean = false,
@@ -70,8 +70,8 @@ data class MovieModel(
         return BASE_URL + size.value + "/" + posterPath
     }
 
-    fun getBackdropUrl(size: BackdropSize): String {
-        return BASE_URL + size.value + "/" + posterPath
+    fun getBackdropUrl(size: BackdropSize): String? {
+        return if (backdropPath != null) BASE_URL + size.value + "/" + backdropPath else null
     }
 
     constructor(source: Parcel) : this(

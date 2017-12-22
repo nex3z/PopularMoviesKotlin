@@ -14,7 +14,7 @@ open class RealmMovieEntity(
         var original_title: String = "",
         var original_language: String = "",
         var title: String = "",
-        var backdrop_path: String = "",
+        var backdrop_path: String? = null,
         var popularity: Double = 0.0,
         var vote_count: Int = 0,
         var video: Boolean = false,
