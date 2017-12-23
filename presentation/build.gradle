@@ -51,6 +51,7 @@ dependencies {
 
     implementation presentationDependencies.kotlinStdlibJre7
     implementation presentationDependencies.supportAppcompatV7
+    implementation presentationDependencies.supportAppcompatV4
     implementation presentationDependencies.supportDesign
     implementation presentationDependencies.recyclerView
     implementation presentationDependencies.cardView
