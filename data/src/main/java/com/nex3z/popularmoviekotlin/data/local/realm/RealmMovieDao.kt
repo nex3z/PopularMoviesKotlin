@@ -31,11 +31,10 @@ class RealmMovieDao : MovieDao {
                     .where(RealmMovieEntity::class.java)
                     .equalTo("id", movieId)
                     .findFirst()
-            if (entity == null) {
-                emitter.onComplete()
-            } else {
+            if (entity != null) {
                 emitter.onSuccess(entity.transform())
             }
+            emitter.onComplete()
             realm.close()
         }
     }
