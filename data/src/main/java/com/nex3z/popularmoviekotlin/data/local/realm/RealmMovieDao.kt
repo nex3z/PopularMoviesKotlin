@@ -9,35 +9,18 @@ import io.reactivex.Single
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
-class RealmMovieDao : MovieDao {
+class RealmMovieDao : BaseRealmDao(), MovieDao {
 
-    private val config = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
+    override val config: RealmConfiguration =
+            RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
 
-    override fun getMovies(): Single<List<MovieEntity>> {
-        return Single.create { emitter ->
-            val realm = getRealm()
-            val result = realm
-                    .where(RealmMovieEntity::class.java)
-                    .findAll()
-            emitter.onSuccess(result.map { it.transform() })
-            realm.close()
-        }
-    }
+    override fun getMovies(): Single<List<MovieEntity>> =
+            queryAllInternal(RealmMovieEntity::class)
+                    .map { it.map { it.transform() } }
 
-    override fun getMovieById(movieId: Long): Maybe<MovieEntity> {
-        return Maybe.create{ emitter ->
-            val realm = getRealm()
-            val entity = realm
-                    .where(RealmMovieEntity::class.java)
-                    .equalTo("id", movieId)
-                    .findFirst()
-            if (entity != null) {
-                emitter.onSuccess(entity.transform())
-            }
-            emitter.onComplete()
-            realm.close()
-        }
-    }
+    override fun getMovieById(movieId: Long): Maybe<MovieEntity> =
+            queryByInternal(RealmMovieEntity::class, "id", movieId)
+                    .map { it.transform() }
 
     override fun checkMovieById(movieId: Long): Single<Int> {
         return Single.create{ emitter ->
@@ -55,25 +38,11 @@ class RealmMovieDao : MovieDao {
         }
     }
 
-    override fun insert(movie: MovieEntity) {
-        val realm = getRealm()
-        realm.executeTransaction {
-            realm.copyToRealmOrUpdate(movie.transform())
-        }
-        realm.close()
-    }
+    override fun insert(movie: MovieEntity) = insertInternal(movie.transform())
 
-    override fun delete(movie: MovieEntity) {
-        val realm = getRealm()
-        val result = realm
-                .where(RealmMovieEntity::class.java)
-                .equalTo("id", movie.id)
-                .findAll()
-        realm.executeTransaction {
-            result.deleteAllFromRealm()
-        }
-        realm.close()
-    }
+
+    override fun delete(movie: MovieEntity) =
+            deleteInternal(RealmMovieEntity::class, "id", movie.id)
 
     private fun getRealm(): Realm {
         return Realm.getInstance(config)
