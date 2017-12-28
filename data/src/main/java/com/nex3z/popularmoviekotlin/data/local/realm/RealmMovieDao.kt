@@ -22,24 +22,7 @@ class RealmMovieDao : BaseRealmDao(), MovieDao {
             queryByInternal(RealmMovieEntity::class, "id", movieId)
                     .map { it.transform() }
 
-    override fun checkMovieById(movieId: Long): Single<Int> {
-        return Single.create{ emitter ->
-            val realm = getRealm()
-            val entity = realm
-                    .where(RealmMovieEntity::class.java)
-                    .equalTo("id", movieId)
-                    .findFirst()
-            if (entity == null) {
-                emitter.onSuccess(0)
-            } else {
-                emitter.onSuccess(1)
-            }
-            realm.close()
-        }
-    }
-
     override fun insert(movie: MovieEntity) = insertInternal(movie.transform())
-
 
     override fun delete(movie: MovieEntity) =
             deleteInternal(RealmMovieEntity::class, "id", movie.id)

@@ -14,9 +14,6 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE id = :movieId LIMIT 1")
     fun getMovieById(movieId: Long): Maybe<MovieEntity>
 
-    @Query("SELECT COUNT(*) FROM movies WHERE id = :movieId LIMIT 1")
-    fun checkMovieById(movieId: Long): Single<Int>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(movie: MovieEntity)
 

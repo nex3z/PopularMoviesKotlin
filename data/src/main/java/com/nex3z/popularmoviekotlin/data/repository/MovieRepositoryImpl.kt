@@ -39,7 +39,9 @@ class MovieRepositoryImpl(
     }
 
     override fun isFavouriteMovie(movieId: Long): Single<Boolean> {
-        return movieDao.checkMovieById(movieId).map{ it > 0 }
+        return movieDao.getMovieById(movieId)
+                .map { true }
+                .switchIfEmpty(Single.defer{ Single.just(false) })
     }
 
     override fun addMovieToFavourite(movie: MovieEntity) {
