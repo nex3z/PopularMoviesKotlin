@@ -1,6 +1,7 @@
 package com.nex3z.popularmoviekotlin.favourite
 
 import android.util.Log
+import android.view.View
 import com.nex3z.popularmoviekotlin.app.App
 import com.nex3z.popularmoviekotlin.base.BasePresenter
 import com.nex3z.popularmoviekotlin.domain.interactor.DefaultObserver
@@ -33,9 +34,9 @@ class FavouriteMoviePresenter : BasePresenter<FavouriteMovieVIew>() {
         getFavouriteMovieUseCase.execute(FavouriteMovieObserver(), null)
     }
 
-    fun onMovieClicked(position: Int) {
+    fun onMovieClicked(position: Int, poster: View) {
         if (position >= 0 && position < movies.size) {
-            view?.renderMovieDetail(movies[position])
+            view?.renderMovieDetail(movies[position], poster)
         }
     }
 

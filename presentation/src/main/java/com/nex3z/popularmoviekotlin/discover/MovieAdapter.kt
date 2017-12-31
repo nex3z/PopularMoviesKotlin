@@ -44,7 +44,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.iv_item_movie_poster.setOnClickListener {
-                onMovieClickListener?.onMovieClick(adapterPosition)
+                onMovieClickListener?.onMovieClick(adapterPosition, itemView.iv_item_movie_poster)
             }
             itemView.cb_item_movie_favourite.setOnClickListener {
                 onMovieClickListener?.onFavouriteClick(adapterPosition)
@@ -53,7 +53,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
     }
 
     interface OnMovieClickListener {
-        fun onMovieClick(position: Int)
+        fun onMovieClick(position: Int, poster: View)
         fun onFavouriteClick(position: Int)
     }
 

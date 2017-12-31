@@ -70,8 +70,8 @@ class DiscoverMovieFragment :
         adapter.notifyDataSetChanged()
     }
 
-    override fun renderMovieDetail(movie: MovieModel) {
-        navigator?.navigateToDetail(movie)
+    override fun renderMovieDetail(movie: MovieModel, poster: View) {
+        navigator?.navigateToDetail(movie, poster)
     }
 
     private fun init() {
@@ -90,8 +90,8 @@ class DiscoverMovieFragment :
         }
 
         adapter.onMovieClickListener = object: MovieAdapter.OnMovieClickListener {
-            override fun onMovieClick(position: Int) {
-                presenter.onMovieClicked(position)
+            override fun onMovieClick(position: Int, poster: View) {
+                presenter.onMovieClicked(position, poster)
             }
             override fun onFavouriteClick(position: Int) {
                 presenter.toggleFavourite(position)

@@ -13,6 +13,8 @@
     <string name="caption_tab_movie_video">Video</string>
     <string name="caption_tab_movie_review">Review</string>
 
+    <string name="name_poster_transition" translatable="false">detail_poster_transition</string>
+
     <string name="caption_share">Share</string>
     <string name="caption_share_hash_tag">\u0020#PopularMovie</string>
     <string name="msg_nothing_here">Nothing here.</string>

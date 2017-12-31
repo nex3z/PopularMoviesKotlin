@@ -38,6 +38,7 @@ class MovieDetailActivity : AppCompatActivity() {
             movie = savedInstanceState.getParcelable<MovieModel>(ARG_MOVIE)
         }
 
+        supportPostponeEnterTransition()
         init()
     }
 

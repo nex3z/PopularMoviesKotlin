@@ -43,7 +43,14 @@ class MovieInfoFragment : BaseFragment(), MovieInfoView, HasPresenter<MovieInfoP
         tv_movie_info_overview.text = movie.overview
         Picasso.with(context)
                 .load(movie.getPosterUrl(MovieModel.PosterSize.W342))
-                .into(iv_movie_info_poster)
+                .into(iv_movie_info_poster, object : com.squareup.picasso.Callback {
+                    override fun onError() {
+                        activity.supportStartPostponedEnterTransition()
+                    }
+                    override fun onSuccess() {
+                        activity.supportStartPostponedEnterTransition()
+                    }
+                })
     }
 
     private fun init() {

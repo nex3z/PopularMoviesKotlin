@@ -23,11 +23,12 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            tools:src="@drawable/placeholder_poster"
+            android:transitionName="@string/name_poster_transition"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/gl_item_movie_bottom" />
+            app:layout_constraintBottom_toTopOf="@id/gl_item_movie_bottom"
+            tools:src="@drawable/placeholder_poster"/>
 
         <CheckBox
             android:id="@+id/cb_item_movie_favourite"

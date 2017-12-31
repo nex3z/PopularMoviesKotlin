@@ -1,5 +1,6 @@
 package com.nex3z.popularmoviekotlin.discover
 
+import android.view.View
 import com.nex3z.popularmoviekotlin.base.BaseView
 import com.nex3z.popularmoviekotlin.base.LoadDataView
 import com.nex3z.popularmoviekotlin.domain.model.movie.MovieModel
@@ -14,6 +15,6 @@ interface DiscoverMovieView : BaseView, LoadDataView {
 
     fun notifyMovieChanged()
 
-    fun renderMovieDetail(movie: MovieModel)
+    fun renderMovieDetail(movie: MovieModel, poster: View)
 
 }

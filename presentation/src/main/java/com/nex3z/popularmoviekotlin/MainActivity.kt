@@ -3,10 +3,13 @@ package com.nex3z.popularmoviekotlin
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.view.View
 import com.nex3z.popularmoviekotlin.detail.MovieDetailActivity
 import com.nex3z.popularmoviekotlin.discover.DiscoverMovieFragment
 import com.nex3z.popularmoviekotlin.discover.MovieDetailNavigator
@@ -59,10 +62,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    override fun navigateToDetail(movie: MovieModel) {
+    override fun navigateToDetail(movie: MovieModel, poster: View) {
         val intent = Intent(this, MovieDetailActivity::class.java)
         intent.putExtra(MovieDetailActivity.ARG_MOVIE, movie)
-        startActivity(intent)
+        val activityOptions = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(this, android.support.v4.util.Pair<View, String>(
+                        poster, getString(R.string.name_poster_transition)))
+        ActivityCompat.startActivity(this, intent, activityOptions.toBundle())
     }
 
     private fun setupDrawer() {

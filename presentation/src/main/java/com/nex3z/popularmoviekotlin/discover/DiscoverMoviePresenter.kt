@@ -1,6 +1,7 @@
 package com.nex3z.popularmoviekotlin.discover
 
 import android.util.Log
+import android.view.View
 import com.nex3z.popularmoviekotlin.app.App
 import com.nex3z.popularmoviekotlin.base.BasePresenter
 import com.nex3z.popularmoviekotlin.data.entity.discover.DiscoverMovieParams
@@ -31,9 +32,9 @@ class DiscoverMoviePresenter : BasePresenter<DiscoverMovieView>() {
         refreshMovie()
     }
 
-    fun onMovieClicked(position: Int) {
+    fun onMovieClicked(position: Int, poster: View) {
         if (position >= 0 && position < movies.size) {
-            view?.renderMovieDetail(movies[position])
+            view?.renderMovieDetail(movies[position], poster)
         }
     }
 
