@@ -72,14 +72,14 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun initPager() {
-        vp_movie_detail_page_container.setAdapter(SectionPagerAdapter(supportFragmentManager))
+        vp_movie_detail_page_container.adapter = SectionPagerAdapter(supportFragmentManager)
         tab_movie_detail_page.setupWithViewPager(vp_movie_detail_page_container)
 
         abl_movie_detail.addOnOffsetChangedListener({ appBarLayout, verticalOffset ->
             if (ctl_movie_detail.height + verticalOffset < ctl_movie_detail.height / 2) {
-                tb_movie_detail.setVisibility(View.GONE)
+                tab_movie_detail_page.visibility = View.GONE
             } else {
-                tb_movie_detail.setVisibility(View.VISIBLE)
+                tab_movie_detail_page.visibility = View.VISIBLE
             }
         })
     }
