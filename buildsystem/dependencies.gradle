@@ -1,81 +1,46 @@
 ext {
     // Android
-    androidCompileSdkVersion = 26
-    androidMinSdkVersion = 16
-    androidTargetSdkVersion = 26
-
-    kotlinVersion = '1.2.30'
-
-    // Libraries
-    supportAppcompatV7Version = '26.1.0'
-    constraintLayoutVersion = '1.0.2'
-    roomVersion = '1.0.0'
-
-    okHttpVersion = '3.9.0'
-    retrofitVersion = '2.3.0'
-    gsonVersion = '2.8.2'
-    rxJavaVersion = '2.1.5'
-    rxAndroidVersion = '2.0.1'
-    swipyVersion = '1.2.3'
-    picassoVersion = '2.5.2'
-    kenburnsViewVersion = '1.0.7'
-
-    // Testing
-    jUnitVersion = '4.12'
-    runnerVersion = '1.0.1'
-    espressoVersion = '3.0.1'
-
-    dataDependencies = [
-            kotlinStdlibJre7: "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
-            roomRuntime: "android.arch.persistence.room:runtime:${roomVersion}",
-            roomCompiler: "android.arch.persistence.room:compiler:${roomVersion}",
-            roomRxjava2: "android.arch.persistence.room:rxjava2:${roomVersion}",
-            okHttp: "com.squareup.okhttp3:okhttp:${okHttpVersion}",
-            okHttpLoggingInterceptor: "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}",
-            retrofit: "com.squareup.retrofit2:retrofit:${retrofitVersion}",
-            retrofitConverterGson: "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
-            retrofitAdapterRxjava2: "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
-            gson: "com.google.code.gson:gson:${gsonVersion}",
-            rxJava: "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+    android = [
+            compileSdkVersion: 28,
+            minSdkVersion: 17,
+            targetSdkVersion: 28
     ]
 
-    dataTestDependencies = [
-            jUnit: "junit:junit:${jUnitVersion}",
-            runner: "com.android.support.test:runner:${runnerVersion}",
-            espressoCore: "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+    kotlinVersion = '1.3.11'
+
+    libs = [
+            kotlinStdlibJdk7: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
+            rxJava: "io.reactivex.rxjava2:rxjava:2.2.5",
+            rxAnroid: "io.reactivex.rxjava2:rxandroid:2.1.0",
+            gson: "com.google.code.gson:gson:2.8.5",
+
+            roomRuntime: "androidx.room:room-runtime:2.1.0-alpha03",
+            roomCompiler: "androidx.room:room-compiler:2.1.0-alpha03",
+            roomRxjava2: "androidx.room:room-rxjava2:2.1.0-alpha03",
+
+            okHttp: "com.squareup.okhttp3:okhttp:3.12.1",
+            okHttpLoggingInterceptor: "com.squareup.okhttp3:logging-interceptor:3.12.1",
+
+            retrofit: "com.squareup.retrofit2:retrofit:2.5.0",
+            retrofitConverterGson: "com.squareup.retrofit2:converter-gson:2.5.0",
+            retrofitAdapterRxjava2: "com.squareup.retrofit2:adapter-rxjava2:2.5.0",
+
+            androidxAppcompat: "androidx.appcompat:appcompat:1.1.0-alpha01",
+            androidxCore: "androidx.core:core-ktx:1.1.0-alpha03",
+            androidxLifecycle: "androidx.lifecycle:lifecycle-extensions:2.0.0-alpha1",
+            androidxNavigationFragment: "android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha09",
+            androidxNavigationUi: "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha09",
+            androidxConstraintlayout: "androidx.constraintlayout:constraintlayout:2.0.0-alpha3",
+            androidxCardview: "androidx.cardview:cardview:1.0.0",
+
+            picasso: "com.squareup.picasso:picasso:2.71828",
+            kenburnsview: "com.flaviofaria:kenburnsview:1.0.7",
     ]
 
-    domainDependencies = [
-            kotlinStdlibJre7: "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
-            kotlinReflect: "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}",
-            rxJava: "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
-    ]
-
-    domainTestDependencies = [
-            jUnit: "junit:junit:${jUnitVersion}",
-            runner: "com.android.support.test:runner:${runnerVersion}",
-            espressoCore: "com.android.support.test.espresso:espresso-core:${espressoVersion}",
-    ]
-
-    presentationDependencies = [
-            kotlinStdlibJre7: "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
-            supportAppcompatV7: "com.android.support:appcompat-v7:${supportAppcompatV7Version}",
-            supportAppcompatV4: "com.android.support:support-v4:${supportAppcompatV7Version}",
-            supportDesign: "com.android.support:design:${supportAppcompatV7Version}",
-            recyclerView: "com.android.support:recyclerview-v7:${supportAppcompatV7Version}",
-            cardView: "com.android.support:cardview-v7:${supportAppcompatV7Version}",
-            constraintLayout: "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
-            rxAndroid: "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
-            rxJava: "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
-            swipy: "com.github.omadahealth:swipy:${swipyVersion}@aar",
-            picasso: "com.squareup.picasso:picasso:${picassoVersion}",
-            kenburnsView: "com.flaviofaria:kenburnsview:${kenburnsViewVersion}",
-    ]
-
-    presentationTestDependencies = [
-            jUnit: "junit:junit:${jUnitVersion}",
-            runner: "com.android.support.test:runner:${runnerVersion}",
-            espressoCore: "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+    testLibs = [
+            junit: "junit:junit:4.12",
+            runner: "androidx.test:runner:1.1.1",
+            espressoCore: "androidx.test.espresso:espresso-core:3.1.1"
     ]
 
 }

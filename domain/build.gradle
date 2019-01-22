@@ -2,13 +2,13 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    def globalConfiguration = rootProject.extensions.getByName("ext")
+    def androidConfig = rootProject.ext.android
 
-    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
+    compileSdkVersion androidConfig.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion globalConfiguration["androidMinSdkVersion"]
-        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+        minSdkVersion androidConfig.minSdkVersion
+        targetSdkVersion androidConfig.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -17,29 +17,22 @@ android {
 
     buildTypes {
         release {
-            postprocessing {
-                removeUnusedCode false
-                removeUnusedResources false
-                obfuscate true
-                optimizeCode false
-                consumerProguardFiles 'proguard-rules.pro'
-            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
+    def testLibs = rootProject.ext.testLibs
+    testImplementation testLibs.junit
+    androidTestImplementation testLibs.runner
+    androidTestImplementation testLibs.espressoCore
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':data')
+    def libs = rootProject.ext.libs
+    implementation libs.kotlinStdlibJdk7
+    implementation libs.rxJava
 
-    def domainDependencies = rootProject.ext.domainDependencies
-    def domainTestDependencies = rootProject.ext.domainTestDependencies
-
-    testImplementation domainTestDependencies.jUnit
-    androidTestImplementation domainTestDependencies.runner
-    androidTestImplementation domainTestDependencies.espressoCore
-
-    implementation domainDependencies.kotlinStdlibJre7
-    implementation domainDependencies.rxJava
 }

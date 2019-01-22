@@ -1,16 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'realm-android'
 
 android {
-    def globalConfiguration = rootProject.extensions.getByName("ext")
+    def androidConfig = rootProject.ext.android
 
-    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
+    compileSdkVersion androidConfig.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion globalConfiguration["androidMinSdkVersion"]
-        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+        minSdkVersion androidConfig.minSdkVersion
+        targetSdkVersion androidConfig.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -19,42 +18,31 @@ android {
 
     buildTypes {
         release {
-            postprocessing {
-                removeUnusedCode false
-                removeUnusedResources false
-                obfuscate true
-                optimizeCode false
-                consumerProguardFiles 'proguard-rules.pro'
-            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
+    def testLibs = rootProject.ext.testLibs
+    testImplementation testLibs.junit
+    androidTestImplementation testLibs.runner
+    androidTestImplementation testLibs.espressoCore
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    def libs = rootProject.ext.libs
+    implementation libs.kotlinStdlibJdk7
+    implementation libs.rxJava
+    implementation libs.gson
 
-    def dataDependencies = rootProject.ext.dataDependencies
-    def dataTestDependencies = rootProject.ext.dataTestDependencies
+    implementation libs.roomRuntime
+    kapt libs.roomCompiler
+    implementation libs.roomRxjava2
 
-    testImplementation dataTestDependencies.jUnit
-    androidTestImplementation dataTestDependencies.runner
-    androidTestImplementation dataTestDependencies.espressoCore
-
-    implementation dataDependencies.kotlinStdlibJre7
-    implementation dataDependencies.roomRuntime
-    kapt dataDependencies.roomCompiler
-    implementation dataDependencies.roomRxjava2
-    implementation dataDependencies.okHttp
-    implementation dataDependencies.okHttpLoggingInterceptor
-    implementation dataDependencies.retrofit
-    implementation dataDependencies.retrofitConverterGson
-    implementation dataDependencies.retrofitAdapterRxjava2
-    implementation dataDependencies.gson
-    implementation dataDependencies.rxJava
-
+    implementation libs.okHttp
+    implementation libs.okHttpLoggingInterceptor
+    implementation libs.retrofit
+    implementation libs.retrofitConverterGson
+    implementation libs.retrofitAdapterRxjava2
 }

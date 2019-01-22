@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'androidx.navigation.safeargs'
+
+android {
+    def androidConfig = rootProject.ext.android
+
+    compileSdkVersion androidConfig.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.nex3z.popularmovieskotlin.popularmovieskotlin.app"
+        minSdkVersion androidConfig.minSdkVersion
+        targetSdkVersion androidConfig.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        applicationVariants.all { variant ->
+            variant.buildConfigField "String", "API_KEY", "\"" + getApiKey() + "\""
+        }
+    }
+}
+
+static def getApiKey() {
+    Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['API_KEY']
+}
+
+dependencies {
+    def testLibs = rootProject.ext.testLibs
+    testImplementation testLibs.junit
+    androidTestImplementation testLibs.runner
+    androidTestImplementation testLibs.espressoCore
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(path: ':data')
+    api project(path: ':domain')
+
+    def libs = rootProject.ext.libs
+    implementation libs.kotlinStdlibJdk7
+    implementation libs.rxJava
+    implementation libs.rxAnroid
+    implementation libs.androidxAppcompat
+    implementation libs.androidxCore
+    implementation libs.androidxLifecycle
+    implementation libs.androidxNavigationFragment
+    implementation libs.androidxNavigationUi
+    implementation libs.androidxConstraintlayout
+    implementation libs.androidxCardview
+    implementation libs.picasso
+    implementation libs.kenburnsview
+//    implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha09'
+}
