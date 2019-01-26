@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nex3z.popularmovieskotlin.app.R
+import com.nex3z.popularmovieskotlin.app.misc.EndlessScrollListener
 import com.nex3z.popularmovieskotlin.app.misc.SpacingItemDecoration
 import com.nex3z.popularmovieskotlin.app.misc.ViewModelFactory
 import com.nex3z.popularmovieskotlin.app.misc.dpToPx
@@ -23,6 +24,7 @@ class DiscoverMovieFragment : Fragment() {
     private lateinit var viewModel: DiscoverMovieViewModel
     private val movies: MutableList<MovieModel> = mutableListOf()
     private val adapter: MovieAdapter = MovieAdapter()
+    private lateinit var endlessScrollListener: EndlessScrollListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,9 +56,16 @@ class DiscoverMovieFragment : Fragment() {
         }
 
         with(rv_discover_movie_list) {
-            adapter = this@DiscoverMovieFragment.adapter
-            layoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
+            this.adapter = this@DiscoverMovieFragment.adapter
+            val layoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
+            this.layoutManager = layoutManager
             addItemDecoration(SpacingItemDecoration(dpToPx(4.0f).toInt()))
+
+            endlessScrollListener = EndlessScrollListener(layoutManager)
+            endlessScrollListener.onLoadMore = {
+                viewModel.fetchMore()
+            }
+            addOnScrollListener(endlessScrollListener)
         }
 
         srl_discover_movie_refresh.setColorSchemeColors(*resources.getIntArray(R.array.swipe_refresh_colors))
@@ -77,6 +86,7 @@ class DiscoverMovieFragment : Fragment() {
                     val count = t.movies.size
                     movies.addAll(t.movies)
                     adapter.notifyItemRangeInserted(start, count)
+                    endlessScrollListener.loading = false
                 }
                 is MovieListRefreshEvent -> {
                     movies.clear()

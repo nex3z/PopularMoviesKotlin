@@ -1,6 +1,7 @@
 package com.nex3z.popularmovieskotlin.app.discover
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -28,7 +29,8 @@ class DiscoverMovieViewModel(
 
     fun fetchMore() = fetch(currentPage + 1)
 
-    fun fetch(page: Int) {
+    private fun fetch(page: Int) {
+        Log.v(LOG_TAG, "fetch(): page = $page")
         val params = DiscoverMovieParams(page = page, sortBy = DiscoverMovieParams.SortBy.POPULARITY_DESC)
         discoverMovieUseCase.execute(MovieObserver(page), params)
     }
@@ -39,13 +41,14 @@ class DiscoverMovieViewModel(
                 _movies.value = MovieListRefreshEvent(data)
                 currentPage = page
             } else if (data.isNotEmpty()) {
-                _movies.value = MovieListRefreshEvent(data)
+                _movies.value = MovieListAppendEvent(data)
                 currentPage = page
             }
         }
     }
 
     companion object {
+        private val LOG_TAG: String = DiscoverMovieViewModel::class.java.simpleName
         private const val FIRST_PAGE: Int = 1
     }
 }
