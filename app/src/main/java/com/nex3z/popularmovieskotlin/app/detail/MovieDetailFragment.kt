@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.appbar.AppBarLayout
 import com.nex3z.popularmovieskotlin.app.R
 import com.nex3z.popularmovieskotlin.app.detail.info.MovieInfoFragment
+import com.nex3z.popularmovieskotlin.app.detail.review.MovieReviewFragment
 import com.nex3z.popularmovieskotlin.app.detail.video.MovieVideoFragment
 import com.nex3z.popularmovieskotlin.domain.model.movie.MovieModel
 import com.squareup.picasso.Picasso
@@ -80,7 +81,7 @@ class MovieDetailFragment : Fragment() {
             return when (position) {
                 0 -> MovieInfoFragment.newInstance(movie)
                 1 -> MovieVideoFragment.newInstance(movie)
-                2 -> MovieInfoFragment.newInstance(movie)
+                2 -> MovieReviewFragment.newInstance(movie)
                 else -> MovieInfoFragment.newInstance(movie)
             }
         }
